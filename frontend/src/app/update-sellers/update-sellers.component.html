@@ -1,0 +1,48 @@
+<form (ngSubmit)="onSubmit()" #sellerForm="ngForm">
+  <div style="max-height: 500px; overflow-y: auto;">
+    <table>
+      <tr>
+        <td>
+          <select [(ngModel)]="selectedSellerId" name="seller" [ngModelOptions]="{standalone: true}" (change)="onSellerChange()">
+            <option *ngFor="let s of sellers" [value]="s.id">
+              {{ s.name }}
+            </option>
+          </select>
+        </td>
+        <td>
+          Nombre:
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="updSeller.name" name="name" class="form-control" required>                  
+        </td>
+        <td>
+          Nacimiento:
+        </td>
+        <td>
+          <!-- Aquí usamos ngModel para vincular la fecha con el getter/setter -->
+          <input type="date" [(ngModel)]="birthday" name="birthday" class="form-control" required >                
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input class="btn btn-primary" type="submit" value="Actualizar" [disabled]="!sellerForm.valid">
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
+
+<!-- Contenedor para el mensaje -->
+<div *ngIf="showMessage" class="message-container">
+  <div class="message-box">
+    <p>{{ message }}</p>
+    <button (click)="closeMessage()">Cerrar</button>
+  </div>
+</div>
+
+
