@@ -24,3 +24,12 @@
     margin-top: 10px;
   }
   
+  .cursor-img {
+    cursor: default; /* Por defecto es la flecha */
+  }
+  
+  .cursor-img:hover {
+    cursor: pointer; /* Al pasar el ratón sobre la imagen, cambia a mano */
+  }
+  
+  
