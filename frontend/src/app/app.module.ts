@@ -22,6 +22,7 @@ import { UpdateSalesComponent } from './update-sales/update-sales.component';
 import { AddSalesComponent } from './add-sales/add-sales.component';
 import { DeleteSalesComponent } from './delete-sales/delete-sales.component';
 import { LoginComponent } from './login/login.component';
+import { PrincipalComponent } from './principal/principal.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { LoginComponent } from './login/login.component';
     UpdateSalesComponent,
     AddSalesComponent,
     DeleteSalesComponent,
-    LoginComponent
+    LoginComponent,
+    PrincipalComponent
   ],
   imports: [
     BrowserModule,

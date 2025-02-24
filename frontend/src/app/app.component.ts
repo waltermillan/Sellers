@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { GLOBAL_CONFIG } from './config/config.global';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Product Sales Management.';
+  title = GLOBAL_CONFIG.appName;
   
   constructor(public authService: AuthService) {}
 

@@ -40,7 +40,7 @@ export class DeleteProductsComponent implements OnInit {
       next:(data) => {
         console.log('Producto borrado.');
         this.messageService.showMessage = true;
-        this.messageService.message = 'Producto borrado.';
+        this.messageService.message = 'product deleted.';
         this.getAll();
       },
       error: (error) => {

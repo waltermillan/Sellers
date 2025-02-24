@@ -20,11 +20,14 @@ import { InfoSalesComponent } from './info-sales/info-sales.component';
 import { AddSalesComponent } from './add-sales/add-sales.component';
 import { UpdateSalesComponent } from './update-sales/update-sales.component';
 import { DeleteSalesComponent } from './delete-sales/delete-sales.component';
+
 import { LoginComponent } from './login/login.component';
+import { PrincipalComponent } from './principal/principal.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },  // Redirige a login al inicio
+  { path: 'principal', component: PrincipalComponent }, // Página principal
   { path: 'info-sellers', component: InfoSellersComponent },
   { path: 'add-sellers', component: AddSellersComponent },
   { path: 'update-sellers', component: UpdateSellersComponent },

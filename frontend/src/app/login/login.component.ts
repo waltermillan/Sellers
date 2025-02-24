@@ -16,16 +16,16 @@ export class LoginComponent {
 
   onLogin() {
     // Llamada al servicio para hacer la autenticación
-    this.authService.login(this.username, this.password).subscribe(
-      (response) => {
+    this.authService.login(this.username, this.password).subscribe({
+      next: (response) => {
         // Si la respuesta es exitosa, consideramos que el usuario está autenticado
         this.authService.loggedIn = true;  // Marca como autenticado
-        this.router.navigate(['/info-sellers']);  // Redirige al usuario después del login
+        this.router.navigate(['/principal']);  // Redirige al usuario después del login
       },
-      (error) => {
+      error: (error) => {
         // Si hay un error (usuario o contraseña incorrectos), mostramos el mensaje de error
         this.loginError = 'Invalid username or password';
       }
-    );
+  });
   }
 }
