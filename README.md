@@ -1,5 +1,6 @@
 # Proyecto Sellers
 Visualizacion de vendedores. ABM clásico.
+24/02/2025 => el sistema creció y se tranformó en un sistema de gestión de ventas de productos.
 
 ## Objetivo:
 
@@ -10,7 +11,7 @@ Conectar a Maria DB, por medio de EF, y usando docker y DBeaver
 
 BACKEND:
 - Arquitectura Onion.
-- Diseño de patrones: No hay
+- Diseño de patrones: No hay (inicialmente) 24/02/2025 => Se agregó el patron de diseño DTO.
 
 FRONTEND:
 - Desarrollado con Angular 18.0.2
