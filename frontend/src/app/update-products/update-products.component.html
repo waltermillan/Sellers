@@ -1,0 +1,32 @@
+<form (submit)="obSubmit()" #productForm="ngForm">
+    <div>
+        Name:
+        <select [(ngModel)]="selectedProductId" name="seller" [ngModelOptions]="{standalone: true}" (change)="onProductChange()" class="fixed-width">
+            <option *ngFor="let p of products" [value]="p.id">
+              {{ p.name }}
+            </option>
+        </select>
+
+        Packaging Date
+        <input type="date" [(ngModel)]="packagingDate" name="packagingDate" required>                
+
+
+        Stock
+        <input type="number" [(ngModel)]="updProduct.stock" name="stock" required min="0">
+
+        Price
+        <input type="number" [(ngModel)]="updProduct.price" name="price" required min="0">
+    </div>
+
+    <div>
+        <input type="submit" class="btn btn-primary mt-2" value="Update" [disabled]="!productForm.valid">
+    </div>
+</form>
+
+<!-- Contenedor para el mensaje -->
+<div *ngIf="showMessage" class="message-container">
+    <div class="message-box">
+        <p>{{ message }}</p>
+        <button (click)="closeMessage()">Close</button>
+    </div>
+</div>

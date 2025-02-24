@@ -3,24 +3,28 @@
     <table>
       <tr>
         <td>
-          <select [(ngModel)]="selectedSellerId" name="seller" [ngModelOptions]="{standalone: true}" (change)="onSellerChange()">
+          Seller:
+        </td>
+        <td>
+          <select [(ngModel)]="selectedSellerId" name="seller" [ngModelOptions]="{standalone: true}" (change)="onSellerChange()" class="fixed-width">
             <option *ngFor="let s of sellers" [value]="s.id">
               {{ s.name }}
             </option>
           </select>
         </td>
+      </tr>
+      <tr>
         <td>
-          Nombre:
+          <label>Name:</label>
         </td>
         <td>
-          <input type="text" [(ngModel)]="updSeller.name" name="name" class="form-control" required>                  
+          <input type="text" [(ngModel)]="updSeller.name" name="name" class="form-control fixed-width" required>                  
         </td>
         <td>
-          Nacimiento:
+          <label>Birthday:</label>
         </td>
         <td>
-          <!-- Aquí usamos ngModel para vincular la fecha con el getter/setter -->
-          <input type="date" [(ngModel)]="birthday" name="birthday" class="form-control" required >                
+          <input type="date" [(ngModel)]="birthday" name="birthday" class="form-control fixed-width" required>                
         </td>
       </tr>
       <tr>
@@ -30,19 +34,16 @@
       </tr>
       <tr>
         <td colspan="2">
-          <input class="btn btn-primary" type="submit" value="Actualizar" [disabled]="!sellerForm.valid">
+          <input class="btn btn-primary mt-2" type="submit" value="Update" [disabled]="!sellerForm.valid">
         </td>
       </tr>
     </table>
   </div>
 </form>
-
-<!-- Contenedor para el mensaje -->
-<div *ngIf="showMessage" class="message-container">
-  <div class="message-box">
-    <p>{{ message }}</p>
-    <button (click)="closeMessage()">Cerrar</button>
+  <!-- Contenedor para el mensaje -->
+  <div *ngIf="showMessage" class="message-container">
+    <div class="message-box">
+      <p>{{ message }}</p>
+      <button (click)="closeMessage()">Cerrar</button>
+    </div>
   </div>
-</div>
-
-

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Seller } from '../models/seller.model';
 import { SellerService } from '../services/seller.service';
-import { error } from 'console';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-delete-sellers',
@@ -17,7 +17,9 @@ export class DeleteSellersComponent implements OnInit {
   message = '';
 
   //Constructor
-  constructor(private sellerService:SellerService) {
+  constructor(private sellerService:SellerService,
+              public messageService:MessageService
+  ) {
     
   }
 
@@ -30,8 +32,7 @@ export class DeleteSellersComponent implements OnInit {
     this.getAllSellers();
   }
 
-  //GetAllSellers --> obtiene un array de Seller donde se guardan todos los datos de vendedores de la
-  //la API de clientes.
+  //GetAllSellers --> obtiene un array de Seller donde se guardan todos los datos de vendedores de la API de clientes.
   getAllSellers(){
     this.sellerService.getAllSellers().subscribe({
       next: (data: Seller[]) => {
@@ -39,38 +40,37 @@ export class DeleteSellersComponent implements OnInit {
       },
       error: (error) => {
         console.error("Error al cargar vendedores");
+        if (error.status === 0) {
+          // Este es un error típico de conexión (no hay conexión al servidor)
+          this.messageService.showErrorMessage('Could not connect to the server. Check your Internet connection or try again later.');
+        } else {
+          // Otros errores de la API
+          this.messageService.showErrorMessage('There was an error listing sellers. Please try again.');
+        }
       }
-    })
+    });
   }
 
+  //DeleteSellers --> borra un vendedor de la lista de vendedores. los datos de vendedores de la API de clientes.
   deleteSellers(id:number){
     this.sellerService.deleteSeller(id).subscribe({
       next: (data) => {
-        this.showSuccessMessage('vendedor eliminado exitosamente')
+        this.messageService.showSuccessMessage('seller successfully removed')
         this.getAllSellers();
       },
       error: (error) => {
         console.error("Error al cargar vendedores");
       }
-    })
+    });
   }
 
-    // Método para mostrar el mensaje después de un alta/modificación
-    showSuccessMessage(action: string): void {
-      this.message = `¡${action} exitoso!`;
-      this.showMessage = true;
-      
-      // Cerrar el mensaje después de 3 segundos
-      setTimeout(() => this.closeMessage(), 3000);
-    }
-  
-    // Método para cerrar el mensaje
-    closeMessage(): void {
-      this.showMessage = false;
-    }
+  // Método para cerrar el mensaje
+  closeMessage(): void {
+    this.messageService.showMessage = false;
+  }
 
-    changeCursor(cursorStyle: string): void {
-      document.querySelector('img')?.style.setProperty('cursor', cursorStyle);
-    }
+  changeCursor(cursorStyle: string): void {
+    document.querySelector('img')?.style.setProperty('cursor', cursorStyle);
+  }
 
 }

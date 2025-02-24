@@ -1,4 +1,6 @@
 ﻿using Core.Interfases;
+using Core.Services;
+using Infrastructure.Logging;
 
 namespace API.Extensions;
 public static class ApplicationServiceExtensions
@@ -16,6 +18,16 @@ public static class ApplicationServiceExtensions
     {
         // Register the repository
         services.AddScoped<ISellerRepository, SellerRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IBuyerRepository, BuyerRepository>();
+        services.AddScoped<ISaleRepository, SaleRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<SaleDTOService>();
+
+        // En Program.cs
+        services.AddScoped<ILoggingService, SerilogLoggingService>();
+
 
         // Other service registrations...
         services.AddControllers();

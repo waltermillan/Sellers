@@ -20,7 +20,7 @@ export class UpdateSellersComponent {
   updSeller: Seller = {
     id: 0,
     name: '',
-    birthday: new Date()
+    birthday: null
   };
 
   constructor(private sellerService: SellerService,
@@ -44,6 +44,13 @@ export class UpdateSellersComponent {
       },
       error: (error) => {
         console.error('Error al cargar vendedores', error);
+        if (error.status === 0) {
+          // Este es un error típico de conexión (no hay conexión al servidor)
+          this.showErrorMessage('Could not connect to the server. Check your Internet connection or try again later. successful!');
+        } else {
+          // Otros errores de la API
+          this.showErrorMessage('There was an error adding the seller. Please try again.');
+        }
       }
     });
   }
@@ -51,10 +58,10 @@ export class UpdateSellersComponent {
   // Maneja el cambio de selección
   onSellerChange(): void {
     if (this.selectedSellerId != null) {
-      console.log('Vendedor encontrado:', this.selectedSellerId);
+      //console.log('Vendedor encontrado:', this.selectedSellerId);
       const selectedSeller = this.sellers.find(s => s.id == this.selectedSellerId);
   
-      console.log('Vendedor encontrado:', selectedSeller);
+      //console.log('Vendedor encontrado:', selectedSeller);
   
       if (selectedSeller) {
         this.updSeller.id = selectedSeller.id;
@@ -88,16 +95,17 @@ export class UpdateSellersComponent {
   
 
   updateSeller(): void {
-    console.log('pre-Vendedor actualizado:', this.updSeller);
+    //console.log('pre-Vendedor actualizado:', this.updSeller);
     this.sellerService.updateSeller(this.updSeller).subscribe({
       next: (data) => {
         
-        this.showSuccessMessage('Vendedor actualizado');
+        this.showSuccessMessage('Seller successfully upgraded.');
 
         // alert('Vendedor actualizado exitosamente!');
       },
       error: (error) => {
         console.error('Error al actualizar el vendedor:', error);
+        this.showErrorMessage('Error updating seller.');
       }
     });
   }
@@ -108,7 +116,16 @@ export class UpdateSellersComponent {
 
   // Método para mostrar el mensaje después de un alta/modificación
   showSuccessMessage(action: string): void {
-    this.message = `¡${action} exitoso!`;
+    this.message = `${action}`;
+    this.showMessage = true;
+    
+    // Cerrar el mensaje después de 3 segundos
+    setTimeout(() => this.closeMessage(), 3000);
+  }
+
+  // Método para mostrar el mensaje después de un alta/modificación
+  showErrorMessage(action: string): void {
+    this.message = `${action}`;
     this.showMessage = true;
     
     // Cerrar el mensaje después de 3 segundos

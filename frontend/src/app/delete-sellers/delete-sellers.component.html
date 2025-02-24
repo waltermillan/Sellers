@@ -1,14 +1,12 @@
 <div style="max-height: 500px; overflow-y: auto;">
     <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
-      <thead style="position: sticky; top: 0; background-color: #fff; z-index: 1;">
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Birthday</th>
-          <th>Acción</th>
+          <th>Action</th>
         </tr>
-      </thead>
-      <tbody>
+      <tbody *ngIf="sellers.length > 0; else msgNoData">
         <tr *ngFor="let v of sellers">
           <td>{{ v.id }}</td>
           <td style="text-align: left;">{{ v.name }}</td>
@@ -16,17 +14,22 @@
           <td style="text-align: left;">
 
             <img src="assets/images/trash-alt.svg" style="max-width: 20px;max-height: 20px;" 
-                (click)="deleteSellers(v.id)" class="cursor-img">
+                (click)="deleteSellers(v.id)" class="cursor-img" title="Delete seller.">
           </td>
         </tr>
-      </tbody>
+      </tbody>  
+      <ng-template #msgNoData>
+        <div style="text-align:center;"> 
+          No hay datos...
+        </div>
+      </ng-template>          
     </table>
   </div>
 
   <!-- Contenedor para el mensaje -->
-<div *ngIf="showMessage" class="message-container">
+<div *ngIf="messageService.showMessage" class="message-container">
     <div class="message-box">
-      <p>{{ message }}</p>
-      <button (click)="closeMessage()">Cerrar</button>
+      <p>{{ messageService.message }}</p>
+      <button (click)="closeMessage()">Close</button>
     </div>
-  </div>
+</div>

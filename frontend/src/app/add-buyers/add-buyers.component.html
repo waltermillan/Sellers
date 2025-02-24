@@ -1,0 +1,51 @@
+
+<form (ngSubmit)="onSubmit()" #buyerForm="ngForm">
+<div style="max-height: 500px; overflow-y: auto;">
+    <table>
+        <tr>
+            <td>
+                    ID:              
+            </td>
+            <td>
+                <input type="text" [(ngModel)]="newBuyer.id" class="form-control" name="id" required class="fixed-width">                  
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    Name:              
+            </td>
+            <td>
+                <input type="text" [(ngModel)]="newBuyer.name" class="form-control" name="name" required class="fixed-width">                  
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Social Security Number:                    
+            </td>
+            <td>
+                <input type="number" [(ngModel)]="newBuyer.socialSecurityNumber" class="form-control" name="socialSecurityNumber" required class="fixed-width">                
+            </td>
+        </tr>  
+        <tr>
+            <td colspan="2">
+        <br>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input class="btn btn-primary" type="submit" value="Create" [disabled]="!buyerForm.valid">
+            </td>
+        </tr>
+    </table>
+</div>
+</form>
+    
+<!-- Contenedor para el mensaje -->
+<div *ngIf="messageService.showMessage" class="message-container">
+<div class="message-box">
+    <p>{{ messageService.message }}</p>
+    <button (click)="closeMessage()">Close</button>
+</div>
+</div>
+      

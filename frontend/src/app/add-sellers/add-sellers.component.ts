@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Seller } from '../models/seller.model';
 import { SellerService } from '../services/seller.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-add-sellers',
@@ -20,49 +19,44 @@ export class AddSellersComponent implements OnInit {
     birthday: null
   };
 
-  showMessage = false;
-  message = '';
-
   constructor(private sellerService:SellerService,
-              private fb: FormBuilder) {
+              public messageService:MessageService) {
     
   }
 
   ngOnInit(){
     // Inicializar el formulario con validaciones
-    this.sellerForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(50)]],
-      birthday: ['', [Validators.required]]
-    });
-  }
-
-  addSeller(): void{
-    this.sellerService.addSeller(this.newSeller).subscribe({
-      next: (data) => {
-        console.log('Vendedor agregado:', this.newSeller);
-        this.showSuccessMessage('Vendedor agregado exitosamente!')
-      },
-      error: (error) => {
-        console.error('Error al agregar el vendedor:', error);
-      }
-    })
+    // this.sellerForm = this.fb.group({
+    //   name: ['', [Validators.required, Validators.maxLength(50)]],
+    //   birthday: ['', [Validators.required]]
+    // });
   }
 
   onSubmit(){
     this.addSeller();
   }
 
-    // Método para mostrar el mensaje después de un alta/modificación
-  showSuccessMessage(action: string): void {
-    this.message = `¡${action} exitoso!`;
-    this.showMessage = true;
-    
-    // Cerrar el mensaje después de 3 segundos
-    setTimeout(() => this.closeMessage(), 3000);
+  addSeller(): void{
+    this.sellerService.addSeller(this.newSeller).subscribe({
+      next: (data) => {
+        //console.log('Vendedor agregado:', this.newSeller);
+        this.messageService.showSuccessMessage('Seller successfully added!')
+      },
+      error: (error) => {
+        console.error('Error al agregar el vendedor:', error);
+        if (error.status === 0) {
+          // Este es un error típico de conexión (no hay conexión al servidor)
+          this.messageService.showErrorMessage('Could not connect to the server. Please check your Internet connection or try again later!');
+        } else {
+          // Otros errores de la API
+          this.messageService.showErrorMessage('There was an error adding the seller. Please try again.');
+        }
+      }
+    })
   }
 
   // Método para cerrar el mensaje
   closeMessage(): void {
-    this.showMessage = false;
+    this.messageService.showMessage = false;
   }
 }

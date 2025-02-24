@@ -1,0 +1,73 @@
+<div style="max-height: 500px; overflow-y: auto;">
+  <table id="tblSales" class="table table-bordered" style="width: 100%; border-collapse: collapse;">  
+      <tr>
+        <th>ID Seller</th>
+        <th>Seller Name</th>
+        <th>ID Buyer</th>
+        <th>Buyer Name</th>
+        <th>ID Product</th>
+        <th>Product Name</th>
+        <th>Date</th>
+      </tr>
+    <tbody>
+      <tr *ngFor="let s of salesDTO">
+          <td style="text-align: left;">{{ s.idSeller }}</td>
+          <td style="text-align: left;">{{ s.sellerName }}</td>
+
+        <td style="text-align: left;">{{ s.idBuyer }}</td>
+        <td style="text-align: left;">{{ s.buyerName }}</td>
+
+        <td style="text-align: left;">{{ s.idProduct }}</td>
+        <td style="text-align: left;">{{ s.productName }}</td>
+
+        <td style="text-align: left;">{{ s.date | date: 'dd/MM/YYYY' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  
+<div>
+  <table style="width: 100%;">
+    <tr>
+      <td *ngIf="salesDTO.length > 0; else msgNoData">
+        <!-- <img src="assets/images/excel.svg" style="max-width: 40px;max-height: 40px;" 
+        (click)="exportToExcel()" class="cursor-img" class="cursor-img" title="Export to EXCEL"> 
+        <img src="assets/images/pdf.svg" style="max-width: 40px;max-height: 40px;" 
+        (click)="exportToPDF()" class="cursor-img" class="cursor-img" title="Export to PDF">                     -->
+      </td>    
+    </tr>
+  </table>
+</div>
+
+<div>
+  <table style="width: 100%;">
+    <tr>
+      <td *ngIf="salesDTO.length > 0; else msgNoData">
+        <img src="assets/images/excel.svg" style="max-width: 30px;max-height: 30px;" 
+        (click)="exportToExcel()" class="cursor-img" class="cursor-img" title="Export to EXCEL"> 
+        <img src="assets/images/pdf.svg" style="max-width: 30px;max-height: 30px;" 
+        (click)="exportToPDF()" class="cursor-img" class="cursor-img" title="Export to PDF">                    
+      </td>    
+    </tr>
+  </table>
+</div>
+  
+<ng-template #msgNoData>
+  <div style="text-align:center;"> 
+    No hay datos...
+  </div>
+</ng-template>
+  
+<!-- Contenedor para el mensaje -->
+<div *ngIf="messageService.showMessage" class="message-container">
+  <div class="message-box">
+    <p>{{ messageService.message }}</p>
+    <button (click)="closeMessage()">Close</button>
+  </div>
+</div>
+    
+  
+  
+  
+  
+  

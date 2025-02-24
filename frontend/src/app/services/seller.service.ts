@@ -16,21 +16,21 @@ export class SellerService {
   // Método para obtener todos los sellers
   getAllSellers(): Observable<Seller[]>{
       this.url = this.api + 'GetAll';
-      console.log(this.url);
+      //console.log(this.url);
       return this.http.get<Seller[]>(this.url);
   }
 
   // Método para crear un nuevo Seller
   addSeller(seller: Seller): Observable<Seller> {
     this.url = this.api + 'Add'
-    console.log("->addSeller");
+    //console.log("->addSeller");
     return this.http.post<Seller>(this.url, seller);
   }
 
   // Método para actualizar un Seller
   updateSeller(seller: Seller): Observable<Seller> {
     this.url = this.api + 'Update';
-    console.log("->updateSeller");
+    //console.log("->updateSeller");
     return this.http.put<Seller>(this.url, seller);
   }
   

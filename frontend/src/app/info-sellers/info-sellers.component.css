@@ -1,5 +1,5 @@
 /* Estilos generales para la tabla */
-table {
+#tblSellers table {
 
     border-collapse: collapse; /* Hace que los bordes se fusionen */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera alrededor de la tabla */
@@ -7,7 +7,7 @@ table {
   }
   
   /* Estilos para las celdas del encabezado */
-  th {
+  #tblSellers th {
     background-color: #343a40; /* Fondo oscuro */
     color: white; /* Texto blanco */
     text-align: left; /* Alineación a la izquierda */
@@ -15,7 +15,7 @@ table {
   }
   
   /* Estilos para las celdas de la tabla */
-  td {
+  #tblSellers td {
     
     text-align: left; /* Alineación a la izquierda */
 
@@ -23,18 +23,18 @@ table {
   }
   
   /* Estilo para las filas alternas (filas impares) */
-  tr:nth-child(odd) {
+  #tblSellers tr:nth-child(odd) {
     background-color: #f9f9f9; /* Fondo claro para las filas impares */
   }
   
   /* Estilo para las filas cuando el mouse pasa por encima */
-  tr:hover {
+  #tblSellers tr:hover {
     background-color: #f1f1f1; /* Fondo ligeramente gris al pasar el ratón */
     cursor: pointer; /* Cambia el cursor a mano */
   }
     
   /* Estilo para la primera columna, si quieres que se destaque */
-  td:first-child {
+  #tblSellers td:first-child {
     font-weight: bold; /* Resalta la primera columna con negritas */
   }
   

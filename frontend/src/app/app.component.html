@@ -1,26 +1,64 @@
-<div>
-  <!-- Rótulo con imagen en la parte superior -->
-  <header style="background-color: #d6e9e9; color: black; padding: 20px; text-align: center;">
-    <!-- Corregir el uso de comillas aquí -->
-    <img src="assets/images/seller.png" alt="Logo" style="max-width: 50px;max-height: 50px; vertical-align: middle; margin-right: 20px;">
-    <span style="font-size: 24px; vertical-align: middle;">Sellers Management</span>
+<div *ngIf="!authService.isLoggedIn()">
+  <app-login></app-login>  <!-- Aquí cargamos el formulario de login -->
+</div>
+
+<div *ngIf="authService.isLoggedIn()">
+  <!-- Vista completa de la app, incluyendo el header, menu y footer -->
+  <header style="background-color: #d6e9e9; color: black; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <!-- Logo e título en el centro -->
+    <div style="display: flex; align-items: center; flex-grow: 1; justify-content: center;">
+      <img src="assets/images/seller.png" alt="Logo" style="max-width: 60px; max-height: 60px; vertical-align: middle; margin-right: 20px;">
+      <span style="font-size: 24px; vertical-align: middle;">{{this.title}}</span>
+    </div>
+    
+    <!-- Botón de Log Out a la derecha -->
+    <button (click)="logout()" style="padding: 6px 12px; background-color: #f44336; color: white; border: none; cursor: pointer; font-size: 14px;">
+      Log Out
+    </button>
   </header>
 
-  <!-- Contenedor principal con el menú lateral y contenido -->
   <div style="display: flex">
     <!-- Menú lateral -->
     <div style="width: 200px; background-color: #f4f4f4; padding: 10px; height: 600px;">
+      <b> Sellers</b>
       <ul>
         <li><a routerLink="/info-sellers" routerLinkActive="active">Info Sellers</a></li>
         <li><a routerLink="/add-sellers" routerLinkActive="active">Add Sellers</a></li>
         <li><a routerLink="/update-sellers" routerLinkActive="active">Update Sellers</a></li>
         <li><a routerLink="/delete-sellers" routerLinkActive="active">Delete Sellers</a></li>
       </ul>
+      <hr>
+      <b> Products</b>
+      <ul>
+        <li><a routerLink="/info-products" routerLinkActive="active">Info Products</a></li>
+        <li><a routerLink="/add-products" routerLinkActive="active">Add Products</a></li>
+        <li><a routerLink="/update-products" routerLinkActive="active">Update Products</a></li>
+        <li><a routerLink="/delete-products" routerLinkActive="active">Delete Products</a></li>
+      </ul>
+      <hr>
+      <b> Buyers</b>
+      <ul>
+        <li><a routerLink="/info-buyers" routerLinkActive="active">Info Buyers</a></li>
+        <li><a routerLink="/add-buyers" routerLinkActive="active">Add Buyers</a></li>
+        <li><a routerLink="/update-buyers" routerLinkActive="active">Update Buyers</a></li>
+        <li><a routerLink="/delete-buyers" routerLinkActive="active">Delete Buyers</a></li>
+      </ul>
+      <hr>
+      <b> Sales</b>
+      <ul>
+        <li><a routerLink="/info-sales" routerLinkActive="active">Info Sales</a></li>
+        <li><a routerLink="/add-sales" routerLinkActive="active">Add Sales</a></li>
+        <!-- <li><a routerLink="/update-sales" routerLinkActive="active">Update Sales</a></li> -->
+        <li><a routerLink="/delete-sales" routerLinkActive="active">Delete Sales</a></li>
+      </ul>
     </div>
 
-    <!-- Contenido principal -->
     <div style="flex-grow: 1; padding: 20px;">
-      <router-outlet></router-outlet>  <!-- Aquí se cargarán los componentes -->
+      <router-outlet></router-outlet>  <!-- Aquí se cargan los componentes -->
     </div>
   </div>
+
+  <footer style="background-color: #d6e9e9; color: black; padding: 10px; text-align: center; position: fixed; width: 100%; bottom: 0;height: 50px;">
+    <p>&copy; 2025 {{this.title}} All rights reserved.</p>
+  </footer>
 </div>

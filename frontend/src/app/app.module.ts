@@ -9,6 +9,19 @@ import { InfoSellersComponent } from './info-sellers/info-sellers.component';
 import { AddSellersComponent } from './add-sellers/add-sellers.component';
 import { UpdateSellersComponent } from './update-sellers/update-sellers.component';
 import { DeleteSellersComponent } from './delete-sellers/delete-sellers.component';
+import { InfoProductsComponent } from './info-products/info-products.component';
+import { AddProductsComponent } from './add-products/add-products.component';
+import { UpdateProductsComponent } from './update-products/update-products.component';
+import { DeleteProductsComponent } from './delete-products/delete-products.component';
+import { InfoBuyersComponent } from './info-buyers/info-buyers.component';
+import { AddBuyersComponent } from './add-buyers/add-buyers.component';
+import { UpdateBuyersComponent } from './update-buyers/update-buyers.component';
+import { DeleteBuyersComponent } from './delete-buyers/delete-buyers.component';
+import { InfoSalesComponent } from './info-sales/info-sales.component';
+import { UpdateSalesComponent } from './update-sales/update-sales.component';
+import { AddSalesComponent } from './add-sales/add-sales.component';
+import { DeleteSalesComponent } from './delete-sales/delete-sales.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -17,7 +30,20 @@ import { DeleteSellersComponent } from './delete-sellers/delete-sellers.componen
     InfoSellersComponent,
     AddSellersComponent,
     UpdateSellersComponent,
-    DeleteSellersComponent
+    DeleteSellersComponent,
+    InfoProductsComponent,
+    AddProductsComponent,
+    UpdateProductsComponent,
+    DeleteProductsComponent,
+    InfoBuyersComponent,
+    AddBuyersComponent,
+    UpdateBuyersComponent,
+    DeleteBuyersComponent,
+    InfoSalesComponent,
+    UpdateSalesComponent,
+    AddSalesComponent,
+    DeleteSalesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

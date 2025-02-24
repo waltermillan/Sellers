@@ -1,0 +1,24 @@
+.listbox ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 200px;
+    border: 1px solid #ccc;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  
+  .listbox li {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .listbox li:hover {
+    background-color: #eaeaea;
+  }
+  
+  .listbox li.selected {
+    background-color: #8bc34a;
+    color: white;
+  }
+  

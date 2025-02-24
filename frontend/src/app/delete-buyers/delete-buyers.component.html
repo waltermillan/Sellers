@@ -1,0 +1,35 @@
+<div style="max-height: 500px; overflow-y: auto;">
+    <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+        <th>
+            Id
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Social Security Number
+        </th>
+        <th>
+            Action
+        </th>
+        <tbody>
+            <tr *ngFor="let b of buyers">
+                <td>{{b.id}}</td>
+                <td>{{b.name}}</td>
+                <td>{{b.socialSecurityNumber}}</td>    
+                <td>
+                    <img src="assets/images/trash-alt.svg" alt="" style="max-width: 20px;max-height: 20px;" 
+                    (click)="deleteBuyer(b.id)" class="cursor-img" title="Delete buyer.">
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+  <!-- Contenedor para el mensaje -->
+  <div *ngIf="messageService.showMessage" class="message-container">
+    <div class="message-box">
+      <p>{{ messageService.message }}</p>
+      <button (click)="closeMessage()">Close</button>
+    </div>
+</div>
