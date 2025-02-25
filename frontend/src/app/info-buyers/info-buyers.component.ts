@@ -4,6 +4,7 @@ import { BuyerService } from '../services/buyer.service';
 import { MessageService } from '../services/message.service';
 import { ExportService } from '../services/export.service';
 import { CommonService } from '../services/common.service';
+import { GLOBAL_CONFIG } from '../config/config.global';
 
 @Component({
   selector: 'app-info-buyers',
@@ -12,7 +13,7 @@ import { CommonService } from '../services/common.service';
 })
 export class InfoBuyersComponent implements OnInit {
 
-  infoFileName: string = 'Data_Buyers_'
+  
   buyers:Buyer[] = [];
 
   constructor(private buyerService: BuyerService,
@@ -47,12 +48,12 @@ export class InfoBuyersComponent implements OnInit {
   }
 
   exportToExcel(){
-    const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.xls';
+    const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.xls';
     this.exportService.exportTableToExcel('tblBuyers', fileName)
   }
 
   exportToPDF(){
-  const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.pdf';
+  const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.pdf';
   this.exportService.exportTableToPDF('tblBuyers', fileName)
   }
 }

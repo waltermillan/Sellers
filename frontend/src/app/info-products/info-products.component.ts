@@ -4,6 +4,7 @@ import { ProductService } from '../services/product.service';
 import { MessageService } from '../services/message.service';
 import { CommonService} from '../services/common.service';
 import { ExportService} from '../services/export.service';
+import { GLOBAL_CONFIG } from '../config/config.global';
 
 @Component({
   selector: 'app-info-products',
@@ -12,7 +13,6 @@ import { ExportService} from '../services/export.service';
 })
 export class InfoProductsComponent implements OnInit {
 
-  infoFileName:string = 'Data_Products_';
   products:Product[] = [];
 
   constructor(private productService: ProductService,
@@ -42,12 +42,12 @@ export class InfoProductsComponent implements OnInit {
   }
 
   exportToExcel(){
-    const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.xls';
+    const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.xls';
     this.exportService.exportTableToExcel('tblProducts', fileName)
   }
 
   exportToPDF(){
-  const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.pdf';
+  const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.pdf';
   this.exportService.exportTableToPDF('tblProducts', fileName)
   }
 

@@ -7,7 +7,7 @@ export class CommonService {
 
   constructor() { }
 
-  getFormattedDate(){
+  getCompleteFormattedDate(){
     const now = new Date();
 
     const year = now.getFullYear();
@@ -20,4 +20,12 @@ export class CommonService {
     // Combina los valores en el formato deseado
     return `${year}${month}${day}${hours}${minutes}${seconds}`;
    }
+
+   getShortFormattedDate(date: Date): string {
+    const day = ("0" + date.getDate()).slice(-2);   // Asegura que el día siempre tenga 2 dígitos
+    const month = ("0" + (date.getMonth() + 1)).slice(-2); // El mes comienza desde 0 (enero), así que sumamos 1
+    const year = date.getFullYear();
+  
+    return `${day}/${month}/${year}`;
+  }
 }

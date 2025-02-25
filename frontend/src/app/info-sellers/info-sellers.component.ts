@@ -4,6 +4,7 @@ import { SellerService } from '../services/seller.service';
 import { MessageService } from '../services/message.service';
 import { ExportService } from '../services/export.service';
 import { CommonService } from '../services/common.service';
+import { GLOBAL_CONFIG } from '../config/config.global';
 
 @Component({
   selector: 'app-info-sellers',
@@ -13,7 +14,6 @@ import { CommonService } from '../services/common.service';
 export class InfoSellersComponent implements OnInit {
   //Declaración de variables
 
-  infoFileName:string = 'Data_Sales_';
   public sellers: Seller[] = [];
 
   //Constructor
@@ -58,12 +58,12 @@ export class InfoSellersComponent implements OnInit {
   }
 
   exportToExcel(){
-    const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.xls';
+    const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.xls';
     this.exportService.exportTableToExcel('tblSellers', fileName);
   }
 
   exportToPDF(): void {
-    const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.pdf';
+    const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.pdf';
     this.exportService.exportTableToPDF('tblSellers', fileName);
   }
 

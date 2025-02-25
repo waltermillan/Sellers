@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]s")] // Usamos el plural en la ruta para seguir la convención RESTful
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
@@ -16,6 +16,7 @@ public class UserController : ControllerBase
         _loggingService = loggingService;
     }
 
+    // Autenticación de usuario
     [HttpGet("Auth")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -37,9 +38,6 @@ public class UserController : ControllerBase
             // Si la autenticación es exitosa, se registra la acción y se retorna un 200 OK
             _loggingService.LogInformation($"Usuario '{usr}' autenticado correctamente.");
 
-            // Aquí podrías generar un token JWT si es necesario para la autenticación basada en token
-            // Ejemplo: var token = GenerateJwtToken(usr);
-
             // Retorna un OK con un mensaje (o token si lo generas)
             return Ok(new { Code = 0, Message = "User authenticated successfully" });
 
@@ -55,8 +53,8 @@ public class UserController : ControllerBase
         }
     }
 
-
-    [HttpGet("GetAll")]
+    // Obtener todos los usuarios
+    [HttpGet] // GET api/users
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -70,14 +68,14 @@ public class UserController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the Users. Please try again later.";
+            message = "There was an issue retrieving the users. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpGet("Get")]
+    // Obtener un usuario por ID
+    [HttpGet("{id}")] // GET api/users/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -94,16 +92,15 @@ public class UserController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the Users. Please try again later.";
+            message = "There was an issue retrieving the user. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-
-    [HttpPost("Add")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    // Crear un nuevo usuario
+    [HttpPost] // POST api/users
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Create(User user)
@@ -113,46 +110,46 @@ public class UserController : ControllerBase
         {
             await _userRepository.AddAsync(user);
 
-            _loggingService.LogInformation($"Vendedor alta efectuada: {JsonConvert.SerializeObject(user)}");
+            _loggingService.LogInformation($"Usuario creado: {JsonConvert.SerializeObject(user)}");
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the Users. Please try again later.";
+            message = "There was an issue creating the user. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpPut("Update")]
+    // Actualizar un usuario existente
+    [HttpPut("{id}")] // PUT api/users/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> Update([FromBody] User user)
+    public async Task<ActionResult> Update(int id, [FromBody] User user)
     {
         var message = string.Empty;
         try
         {
-            if (user is null)
+            if (user is null || user.Id != id)
                 return BadRequest();
 
             await _userRepository.UpdateAsync(user);
 
-            _loggingService.LogInformation($"Vendedor actualización efectuada: {JsonConvert.SerializeObject(user)}");
+            _loggingService.LogInformation($"Usuario actualizado: {JsonConvert.SerializeObject(user)}");
             return NoContent();
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the Users. Please try again later.";
+            message = "There was an issue updating the user. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpDelete("Delete")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    // Eliminar un usuario
+    [HttpDelete("{id}")] // DELETE api/users/{id}
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Delete(int id)
@@ -162,13 +159,12 @@ public class UserController : ControllerBase
         {
             await _userRepository.DeleteAsync(id);
 
-            _loggingService.LogInformation($"Vendedor baja efectuada: {id}");
+            _loggingService.LogInformation($"Usuario eliminado: {id}");
             return NoContent();
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the Users. Please try again later.";
+            message = "There was an issue deleting the user. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }

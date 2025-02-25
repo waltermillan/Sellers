@@ -13,7 +13,7 @@ export class SaleService {
 
   //Get all Sales
   getAll():Observable<Sale[]>{
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Sale/GetAll' ;
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'sales' ;
     console.log(url);
     return this.http.get<Sale[]>(url);
   }
@@ -21,7 +21,7 @@ export class SaleService {
   //Add new Sale
   add(sale:Sale){
 
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Sale/Add' ;
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'sales' ;
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -32,14 +32,14 @@ export class SaleService {
   }
 
   //Update a Sale
-  update(sale:Sale){
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Sale/Update';
+  update(sale:Sale, id: number){
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/' + id;
     return this.http.put(url, sale);
   }
 
   //Delete a Sale
   delete(id:number){
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Sale/Delete?id=' + id;
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/' + id;
     return this.http.delete(url);
   }
 }

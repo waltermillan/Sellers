@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/products")] // Cambié la ruta para que sea plural, api/products
 public class ProductController : ControllerBase
 {
     private readonly IProductRepository _productRepository;
@@ -17,7 +17,7 @@ public class ProductController : ControllerBase
         _loggingService = loggingService1;
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet] // GET api/products
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -31,15 +31,13 @@ public class ProductController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
-
     }
 
-    [HttpGet("Get")]
+    [HttpGet("{id}")] // GET api/products/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -56,15 +54,13 @@ public class ProductController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-
-    [HttpPost("Add")]
+    [HttpPost] // POST api/products
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -79,40 +75,37 @@ public class ProductController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpPut("Update")]
+    [HttpPut("{id}")] // PUT api/products/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> Update([FromBody] Product product)
+    public async Task<ActionResult> Update(int id, [FromBody] Product product)
     {
         var message = string.Empty;
         try
         {
-            if (product is null)
+            if (product == null || id != product.Id)
                 return BadRequest();
 
             await _productRepository.UpdateAsync(product);
-
             _loggingService.LogInformation($"Producto actualización efectuada: {JsonConvert.SerializeObject(product)}");
             return NoContent();
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpDelete("Delete")]
+    [HttpDelete("{id}")] // DELETE api/products/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -127,7 +120,6 @@ public class ProductController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });

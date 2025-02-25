@@ -8,6 +8,7 @@ export const GLOBAL_CONFIG = {
     // Nombre de la aplicación
     appName: 'Product Sales Management.',
     welcomeMessage: 'Welcome to Product Sales Management.',
+    infoFileName: 'Data_',
   
     // Versión de la aplicación
     appVersion: '1.0.0',

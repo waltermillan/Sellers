@@ -25,11 +25,7 @@ export class AddSellersComponent implements OnInit {
   }
 
   ngOnInit(){
-    // Inicializar el formulario con validaciones
-    // this.sellerForm = this.fb.group({
-    //   name: ['', [Validators.required, Validators.maxLength(50)]],
-    //   birthday: ['', [Validators.required]]
-    // });
+
   }
 
   onSubmit(){

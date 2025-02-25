@@ -4,7 +4,7 @@ using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/saleDTOs")] // Cambié la ruta para que sea plural, api/salesdto (a api/sales)
 public class SaleDTOController : ControllerBase
 {
     private readonly SaleDTOService _saleDTOService;
@@ -16,8 +16,8 @@ public class SaleDTOController : ControllerBase
         _loggingService = loggingService;
     }
 
-    // Obtener un CustomerDTO por id
-    [HttpGet("{id}")]
+    // Obtener un SaleDTO por id
+    [HttpGet("{id}")] // GET api/sales/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -26,25 +26,24 @@ public class SaleDTOController : ControllerBase
         var message = string.Empty;
         try
         {
-            var customerDTO = await _saleDTOService.GetSaleAsync(id);
+            var saleDTO = await _saleDTOService.GetSaleAsync(id);
 
-            if (customerDTO == null)
+            if (saleDTO == null)
             {
                 return NotFound(); // o algún otro manejo de error
             }
 
-            return Ok(customerDTO);
+            return Ok(saleDTO);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the States. Please try again later.";
+            message = "There was an issue retrieving the sale. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet] // GET api/sales (sin el "GetAll")
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -64,8 +63,7 @@ public class SaleDTOController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the States. Please try again later.";
+            message = "There was an issue retrieving the sales. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }

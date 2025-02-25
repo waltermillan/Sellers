@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/sellers")] // Se cambió para seguir la convención RESTful, ahora la ruta es /api/sellers
 public class SellerController : ControllerBase
 {
     private readonly ISellerRepository _sellerRepository;
@@ -16,7 +16,8 @@ public class SellerController : ControllerBase
         _loggingService = loggingService;
     }
 
-    [HttpGet("GetAll")]
+    // Obtener todos los vendedores
+    [HttpGet] // GET api/sellers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -30,14 +31,14 @@ public class SellerController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the States. Please try again later.";
+            message = "There was an issue retrieving the sellers. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpGet("Get")]
+    // Obtener un vendedor por ID
+    [HttpGet("{id}")] // GET api/sellers/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -54,16 +55,15 @@ public class SellerController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the States. Please try again later.";
+            message = "There was an issue retrieving the seller. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-
-    [HttpPost("Add")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    // Crear un nuevo vendedor
+    [HttpPost] // POST api/sellers
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Create(Seller seller)
@@ -72,47 +72,45 @@ public class SellerController : ControllerBase
         try
         {
             await _sellerRepository.AddAsync(seller);
-
-            _loggingService.LogInformation($"Vendedor alta efectuada: {JsonConvert.SerializeObject(seller)}");
+            _loggingService.LogInformation($"Seller created: {JsonConvert.SerializeObject(seller)}");
             return CreatedAtAction(nameof(GetById), new { id = seller.Id }, seller);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the States. Please try again later.";
+            message = "There was an issue creating the seller. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpPut("Update")]
+    // Actualizar un vendedor existente
+    [HttpPut("{id}")] // PUT api/sellers/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> Update([FromBody] Seller seller)
+    public async Task<ActionResult> Update(int id, [FromBody] Seller seller)
     {
         var message = string.Empty;
         try
         {
-            if (seller is null)
+            if (seller is null || seller.Id != id)
                 return BadRequest();
 
             await _sellerRepository.UpdateAsync(seller);
-
-            _loggingService.LogInformation($"Vendedor actualización efectuada: {JsonConvert.SerializeObject(seller)}");
+            _loggingService.LogInformation($"Seller updated: {JsonConvert.SerializeObject(seller)}");
             return NoContent();
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the States. Please try again later.";
+            message = "There was an issue updating the seller. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpDelete("Delete")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    // Eliminar un vendedor
+    [HttpDelete("{id}")] // DELETE api/sellers/{id}
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Delete(int id)
@@ -121,14 +119,12 @@ public class SellerController : ControllerBase
         try
         {
             await _sellerRepository.DeleteAsync(id);
-
-            _loggingService.LogInformation($"Vendedor baja efectuada: {id}");
+            _loggingService.LogInformation($"Seller deleted: {id}");
             return NoContent();
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
-            message = "There was an issue retrieving the States. Please try again later.";
+            message = "There was an issue deleting the seller. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }

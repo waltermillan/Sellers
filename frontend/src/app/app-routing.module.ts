@@ -21,6 +21,8 @@ import { AddSalesComponent } from './add-sales/add-sales.component';
 import { UpdateSalesComponent } from './update-sales/update-sales.component';
 import { DeleteSalesComponent } from './delete-sales/delete-sales.component';
 
+import { InfoUsersComponent } from './info-users/info-users.component';
+
 import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 
@@ -43,7 +45,8 @@ const routes: Routes = [
   { path: 'info-sales', component: InfoSalesComponent },
   { path: 'add-sales', component: AddSalesComponent },
   { path: 'update-sales', component: UpdateSalesComponent },
-  { path: 'delete-sales', component: DeleteSalesComponent }
+  { path: 'delete-sales', component: DeleteSalesComponent },
+  { path: 'info-users', component: InfoUsersComponent }
 ];
 
 

@@ -2,22 +2,22 @@
 using Core.Interfases;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net;
+using System;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/sales")] // Cambié la ruta para que sea plural, api/sales
 public class SaleController : ControllerBase
 {
     private readonly ISaleRepository _saleRepository;
     private readonly ILoggingService _loggingService;
 
-    public SaleController(ISaleRepository sellerRepository, ILoggingService loggingService)
+    public SaleController(ISaleRepository saleRepository, ILoggingService loggingService)
     {
-        _saleRepository = sellerRepository;
+        _saleRepository = saleRepository;
         _loggingService = loggingService;
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet] // GET api/sales
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -26,19 +26,18 @@ public class SaleController : ControllerBase
         var message = string.Empty;
         try
         {
-            var sale = await _saleRepository.GetAllAsync();
-            return Ok(sale);
+            var sales = await _saleRepository.GetAllAsync();
+            return Ok(sales);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpGet("Get")]
+    [HttpGet("{id}")] // GET api/sales/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -55,15 +54,13 @@ public class SaleController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-
-    [HttpPost("Add")]
+    [HttpPost] // POST api/sales
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -72,7 +69,7 @@ public class SaleController : ControllerBase
         var message = string.Empty;
         try
         {
-            if (sale is null)
+            if (sale == null)
             {
                 return BadRequest("Sale object is null");
             }
@@ -83,23 +80,22 @@ public class SaleController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpPut("Update")]
+    [HttpPut("{id}")] // PUT api/sales/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> Update([FromBody] Sale sale)
+    public async Task<ActionResult> Update(int id, [FromBody] Sale sale)
     {
         var message = string.Empty;
         try
         {
-            if (sale is null)
+            if (sale == null || id != sale.Id)
                 return BadRequest();
 
             await _saleRepository.UpdateAsync(sale);
@@ -109,14 +105,13 @@ public class SaleController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    [HttpDelete("Delete")]
+    [HttpDelete("{id}")] // DELETE api/sales/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -132,7 +127,6 @@ public class SaleController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });

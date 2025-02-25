@@ -4,6 +4,7 @@ import { SaleDTOService } from '../services/sale-dto.service';
 import { MessageService } from '../services/message.service';
 import { ExportService } from '../services/export.service';
 import { CommonService } from '../services/common.service';
+import { GLOBAL_CONFIG } from '../config/config.global';
 
 @Component({
   selector: 'app-info-sales',
@@ -12,7 +13,6 @@ import { CommonService } from '../services/common.service';
 })
 export class InfoSalesComponent implements OnInit {
 
-  infoFileName: string = 'Data_Sales_';
   salesDTO: SaleDTO[] = [];
 
   constructor(private saleDTOService: SaleDTOService,
@@ -47,12 +47,12 @@ export class InfoSalesComponent implements OnInit {
    }
 
    exportToExcel(){
-      const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.xls';
+      const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.xls';
       this.exportService.exportTableToExcel('tblSales', fileName)
    }
 
    exportToPDF(){
-    const fileName = this.infoFileName + this.commonService.getFormattedDate() + '.pdf';
+    const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.pdf';
     this.exportService.exportTableToPDF('tblSales', fileName)
    }
 

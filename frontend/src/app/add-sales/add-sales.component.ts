@@ -10,6 +10,7 @@ import { ProductService } from '../services/product.service';
 import { BuyerService } from '../services/buyer.service';
 import { SaleService } from '../services/sale.service';
 import { MessageService } from '../services/message.service';
+import { CommonService } from '../services/common.service';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class AddSalesComponent implements OnInit {
               private productService:ProductService,
               private buyerService:BuyerService,
               private saleService:SaleService,
-              public messageService:MessageService
+              public messageService:MessageService,
+              private commonService: CommonService
   ) {
 
   }
@@ -68,14 +70,14 @@ export class AddSalesComponent implements OnInit {
     this.newSale.idSeller = this.selectedIdSeller;
     this.newSale.idProduct = this.selectedIdProduct;
     this.newSale.idBuyer = this.selectedIdBuyer;
-    this.newSale.date = this.formatDate(new Date());
+    this.newSale.date = this.commonService.getShortFormattedDate(new Date());
 
     const sale: Sale = {
       id: 0,
       idBuyer: this.selectedIdBuyer,
       idProduct: this.selectedIdProduct,
       idSeller: this.selectedIdSeller,
-      date: this.formatDate(new Date())
+      date: this.commonService.getShortFormattedDate(new Date())
     };
 
     if(confirm('Are you sure?')){
@@ -90,14 +92,6 @@ export class AddSalesComponent implements OnInit {
         }
       });
     }
-  }
-
-  formatDate(date: Date): string {
-    const day = ("0" + date.getDate()).slice(-2);   // Asegura que el día siempre tenga 2 dígitos
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // El mes comienza desde 0 (enero), así que sumamos 1
-    const year = date.getFullYear();
-  
-    return `${day}/${month}/${year}`;
   }
 
   getAllSellers(){

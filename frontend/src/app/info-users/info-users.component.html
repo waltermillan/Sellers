@@ -1,0 +1,74 @@
+<div style="max-height: 500px; overflow-y: auto;">
+    <table id="tblUsers" class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <th>ID</th>
+          <th>User Name</th>
+          <th>Password</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Actiont</th>
+        </tr>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>{{ u.id }}</td>
+          <td style="text-align: left;">{{ u.userName }}</td>
+          <td style="text-align: left;">********</td>
+          <td style="text-align: left;">{{ u.createdAt | date: 'dd/MM/YYYY' }}</td>
+          <td style="text-align: left;">{{ u.updatedAt | date: 'dd/MM/YYYY' }}</td>
+          <td style="text-align: left;">
+            <ng-container *ngIf="u.userName != 'admin'; else disabledImage">
+              <img #enabledImage src="assets/images/trash-alt.svg" alt="Delete User" style="max-width: 20px;max-height: 20px;" 
+                   (click)="deleteUser(u.id)" class="cursor-img">
+            </ng-container>
+            <ng-template #disabledImage>
+              <img src="assets/images/minus-circle.svg" alt="Delete User" style="max-width: 20px;max-height: 20px;" 
+              (click)="cannotDeleteUserMessage()" class="cursor-img">
+            </ng-template>
+          </td>
+          
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+    
+                <input type="text" [(ngModel)]="newUser.userName" autocomplete="new-user">
+    
+            </td>
+            <td>
+    
+                <input type="password" [(ngModel)]="newUser.passwordHash" autocomplete="new-password">
+    
+            </td>
+            <td colspan="3">
+                <input type="button" class="btn btn-primary" value="Add" (click)="addUser()">
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div>
+    <table style="width: 100%;" *ngIf="users.length > 0; else msgNoData">
+
+    </table>
+  </div>
+  
+  <ng-template #msgNoData>
+    <div style="text-align:center;"> 
+      No hay datos...
+    </div>
+  </ng-template>
+  
+  <!-- Contenedor para el mensaje -->
+  <div *ngIf="messageService.showMessage" class="message-container">
+    <div class="message-box">
+      <p>{{ messageService.message }}</p>
+      <button (click)="closeMessage()">Close</button>
+    </div>
+  </div>
+    
+  
+  
+  
+  
+  

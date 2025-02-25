@@ -15,25 +15,25 @@ export class ProductService {
 
   //Get all Products
   getAll():Observable<Product[]>{
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Product/GetAll';
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'products';
     return this.http.get<Product[]>(url);
   }
 
   //Add new product
   add(product:Product){
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Product/Add';
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'products';
     return this.http.post(url, product);
   }
 
   //Update a product
-  update(product:Product){
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Product/Update';
+  update(product:Product, id:number){
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'products/' + id;
     return this.http.put(url, product);
   }
 
   //Delete a product
   delete(id:number){
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Product/Delete?id=' + id;
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'products/' + id;
     return this.http.delete(url);
   }
 }

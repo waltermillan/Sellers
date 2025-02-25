@@ -96,7 +96,7 @@ export class UpdateSellersComponent {
 
   updateSeller(): void {
     //console.log('pre-Vendedor actualizado:', this.updSeller);
-    this.sellerService.updateSeller(this.updSeller).subscribe({
+    this.sellerService.updateSeller(this.updSeller, this.updSeller.id).subscribe({
       next: (data) => {
         
         this.showSuccessMessage('Seller successfully upgraded.');

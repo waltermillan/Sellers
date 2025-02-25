@@ -24,7 +24,11 @@ export class LoginComponent {
       },
       error: (error) => {
         // Si hay un error (usuario o contraseña incorrectos), mostramos el mensaje de error
-        this.loginError = 'Invalid username or password';
+        console.log(error);
+        if (error.status === 500)
+          this.loginError = 'Connection to the web API failed. Please check your network connection.';
+        else
+          this.loginError = 'Invalid username1 or password';
       }
   });
   }
