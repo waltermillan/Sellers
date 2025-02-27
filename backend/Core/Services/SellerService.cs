@@ -21,12 +21,7 @@ public class SellerService
     {
         var seller = await _sellerRepository.GetByIdAsync(id);
 
-        if (seller == null)
-        {
-            throw new KeyNotFoundException("Seller not found");
-        }
-
-        return seller;
+        return (seller is null) ? throw new KeyNotFoundException("Seller not found") : seller;
     }
 
     public async Task<IEnumerable<Seller>> GetAllSellers()
@@ -49,21 +44,21 @@ public class SellerService
 
     public void UpdateSeller(Seller seller)
     {
-        var existingSeller = _sellerRepository.GetByIdAsync(seller.Id).Result;
-        if (existingSeller == null)
-        {
+        var exists = _sellerRepository.GetByIdAsync(seller.Id).Result;
+        
+        if (exists is null)
             throw new KeyNotFoundException("Seller to update not found");
-        }
+
         _sellerRepository.UpdateAsync(seller);
     }
 
     public void DeleteSeller(Seller seller)
     {
-        var existingState = _sellerRepository.GetByIdAsync(seller.Id).Result;
-        if (existingState == null)
-        {
+        var exists = _sellerRepository.GetByIdAsync(seller.Id).Result;
+
+        if (exists is null)
             throw new KeyNotFoundException("Seller not found");
-        }
+
         _sellerRepository.DeleteAsync(seller.Id);
     }
 }

@@ -60,10 +60,10 @@ namespace Core.Services
         public async Task<IEnumerable<SaleDTO>> GetAllSalesAsync()
         {
             var sales = await _saleRepository.GetAllAsync(); // Obtener todas las ventas
-            if (sales == null || !sales.Any())
-            {
+
+            if (sales is null || !sales.Any())
+
                 return Enumerable.Empty<SaleDTO>(); // Retornar una lista vacía si no hay ventas
-            }
 
             var salesDTO = new List<SaleDTO>();
 
@@ -73,10 +73,8 @@ namespace Core.Services
                 var seller = await _sellerRepository.GetByIdAsync(sale.IdSeller);
                 var product = await _productRepository.GetByIdAsync(sale.IdProduct);
 
-                if (buyer == null || seller == null || product == null)
-                {
+                if (buyer is null || seller is null || product is null)
                     continue; // Si alguno de los datos relacionados no se encuentra, se omite esa venta
-                }
 
                 var saleDTO = new SaleDTO
                 {

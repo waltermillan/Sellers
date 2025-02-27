@@ -1,0 +1,26 @@
+[
+  {
+	"Id": 1,
+	"UserName": "admin",
+	"PasswordHash": "abC2832",
+	"CreatedAt": "2025-02-27T00:00:00",
+	"UpdatedAt": "2025-02-27T00:00:00"
+  },
+  {
+	"Id": 2,
+	"UserName": "jonhDoe",
+	"PasswordHash": "RisK00€l",
+	"CreatedAt": "2025-02-27T00:00:00",
+	"UpdatedAt": "2025-02-27T00:00:00"
+  },
+  {
+	"Id": 3,
+	"UserName": "RussellVang",
+	"PasswordHash": "aP1019as",
+	"CreatedAt": "2025-02-27T00:00:00",
+	"UpdatedAt": "2025-02-27T00:00:00"
+  }
+]
+
+  
+  

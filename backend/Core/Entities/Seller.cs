@@ -13,8 +13,8 @@ namespace Core.Entities
         [Column("id")]
         public int Id { get; set; }
         [Column("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         [Column("birthday")]
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
     }
 }

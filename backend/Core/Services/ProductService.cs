@@ -21,10 +21,8 @@ public class ProductService
     {
         var product = await _productRepository.GetByIdAsync(id);
 
-        if (product == null)
-        {
+        if (product is null)
             throw new KeyNotFoundException("Product not found");
-        }
 
         return product;
     }
@@ -42,28 +40,26 @@ public class ProductService
     public void AddProducts(IEnumerable<Product> products)
     {
         foreach (var product in products)
-        {
             _productRepository.AddAsync(product);
-        }
     }
 
     public void UpdateProduct(Product product)
     {
-        var existingProduct = _productRepository.GetByIdAsync(product.Id).Result;
-        if (existingProduct == null)
-        {
+        var exists = _productRepository.GetByIdAsync(product.Id).Result;
+
+        if (exists is null)
             throw new KeyNotFoundException("Product to update not found");
-        }
+
         _productRepository.UpdateAsync(product);
     }
 
     public void DeleteProduct(Product product)
     {
-        var existingState = _productRepository.GetByIdAsync(product.Id).Result;
-        if (existingState == null)
-        {
+        var exists = _productRepository.GetByIdAsync(product.Id).Result;
+
+        if (exists is null)
             throw new KeyNotFoundException("Product not found");
-        }
+
         _productRepository.DeleteAsync(product.Id);
     }
 }

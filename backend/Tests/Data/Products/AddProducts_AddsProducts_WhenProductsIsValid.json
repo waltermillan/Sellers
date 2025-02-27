@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Name": "Escaner 3D Leica BLK360 G2",
+    "Price": 10,
+    "PackagingDate": "2025-02-27T12:00:00"
+  },
+  {
+    "Id": 2,
+    "Name": "JMMO proyector inteligente",
+    "Price": 10,
+    "PackagingDate": "2025-02-27T12:00:00"
+  },
+  {
+    "Id": 3,
+    "Name": "Apple HomePod mini",
+    "Price": 10,
+    "PackagingDate": "2025-02-27T12:00:00"
+  }
+]
