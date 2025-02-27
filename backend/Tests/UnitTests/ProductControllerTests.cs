@@ -3,6 +3,7 @@ using Core.Interfases;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json;
 using System.Xml.Linq;
 
 namespace Tests.UnitTests
@@ -22,135 +23,152 @@ namespace Tests.UnitTests
         [Fact]
         public async Task GetById_ReturnsNotFound_WhenProductDoesNotExist()
         {
+            //arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Products\GetById_ReturnsNotFound_WhenProductDoesNotExist.json");
+            var json = File.ReadAllText(jsonFilePath);
+
+            var product = JsonConvert.DeserializeObject<Product>(json);
+
             _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((Product)null);
 
-            var result = await _controller.GetById(1);
+            //Act
+            var result = await _controller.GetById(product.Id);
 
+            //Assert
             var actionResult = Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
         public async Task GetById_ReturnsProduct_WhenProductExists()
         {
-            //arrange
-            DateTime now = DateTime.Now;
+            // Arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Products\GetById_ReturnsProduct_WhenProductExists.json");
+            var json = File.ReadAllText(jsonFilePath);
+
+            var product = JsonConvert.DeserializeObject<Product>(json);
+
             var mockServerRepository = new Mock<IProductRepository>();
-            var product = new Product { Id = 1, Name = "Walter", Price = 10, PackagingDate = now };
-            mockServerRepository.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(product);
+            mockServerRepository.Setup(repo => repo.GetByIdAsync(product.Id)).ReturnsAsync(product);
 
             var productService = new ProductService(mockServerRepository.Object);
 
-            //fact
-            var result = await productService.GetProductById(1);
+            // Act
+            var result = await productService.GetProductById(product.Id);
 
-            //assert
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Id);
-            Assert.Equal("Walter", result.Name);
-            Assert.Equal(10, result.Price);
-            Assert.Equal(now, result.PackagingDate);
+            Assert.Equal("Test Product", result.Name);
+            Assert.Equal(10.99m, result.Price);
+            Assert.Equal(DateTime.Parse("2025-02-27T12:00:00"), result.PackagingDate);
         }
 
         [Fact]
         public void AddProduct_AddsProduct_WhenProductIsValid()
         {
-            // arrange
+            // Arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Products\AddProduct_AddsProduct_WhenProductIsValid.json");
+            var json = File.ReadAllText(jsonFilePath);
+
+            var product = JsonConvert.DeserializeObject<Product>(json);
+
             var mockProductRepository = new Mock<IProductRepository>();
-            DateTime now = DateTime.Now;
-            var product = new Product { Id = 9, Name = "Walter", Price = 10, PackagingDate = now };
 
             mockProductRepository.Setup(repo => repo.AddAsync(It.IsAny<Product>()));
 
             var stateService = new ProductService(mockProductRepository.Object);
 
-            // act
+            //Act
             stateService.AddProduct(product);
 
-            // assert
-            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Walter" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
+            //Assert
+            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Ribbon – 35mm Wide on 50M Rolls – Red – Single Roll" && c.Price == 10 && c.PackagingDate == product.PackagingDate)), Times.Once);
         }
 
         [Fact]
         public void AddProducts_AddsProducts_WhenProductsIsValid()
         {
-            // arrange
+            //Arrange
             var mockProductRepository = new Mock<IProductRepository>();
             DateTime now = DateTime.Now;
             var products = new List<Product>
             {
-                new () { Id = 1, Name = "Walter", Price =10, PackagingDate = now },
-                new () { Id = 2, Name = "Daniel", Price =10, PackagingDate = now },
-                new () { Id = 3, Name = "Joseph", Price =10, PackagingDate = now }
+                new () { Id = 1, Name = "Escaner 3D Leica BLK360 G2", Price =10, PackagingDate = now },
+                new () { Id = 2, Name = "JMMO proyector inteligente", Price =10, PackagingDate = now },
+                new () { Id = 3, Name = "Compra HomePod mini", Price =10, PackagingDate = now }
             };
 
             mockProductRepository.Setup(repo => repo.AddAsync(It.IsAny<Product>()));
 
             var stateService = new ProductService(mockProductRepository.Object);
 
-            // act
+            //Act
             foreach (var product in products)
-            {
                 stateService.AddProduct(product);
-            }
 
-
-            // assert
-            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Walter" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
-            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Daniel" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
-            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Joseph" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
+            //Assert
+            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Escaner 3D Leica BLK360 G2" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
+            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "JMMO proyector inteligente" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
+            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Compra HomePod mini" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
         }
 
         [Fact]
         public void UpdateSelles_UpdatesProduct_WhenProductIsValid()
         {
-            // arrange
+            // Arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Products\UpdateSelles_UpdatesProduct_WhenProductIsValid.json");
+            var json = File.ReadAllText(jsonFilePath);
+
+            var product = JsonConvert.DeserializeObject<Product>(json);
+
             var mockProductRepository = new Mock<IProductRepository>();
-            DateTime now = DateTime.Now;
-            var product = new Product { Id = 1, Name = "Walter", Price = 10, PackagingDate = now };
 
             mockProductRepository.Setup(repo => repo.AddAsync(It.IsAny<Product>()));
 
             var stateService = new ProductService(mockProductRepository.Object);
 
-            // act
+            //Act
             stateService.AddProduct(product);
 
-
-            // assert
-            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == "Walter" && c.Price == 10 && c.PackagingDate == now)), Times.Once);
+            //Assert
+            mockProductRepository.Verify(repo => repo.AddAsync(It.Is<Product>(c => c.Name == product.Name && c.Price == product.Price && c.PackagingDate == product.PackagingDate)), Times.Once);
         }
 
         [Fact]
         public void DeleteProduct_DeletesProduct_WhenProductExists()
         {
-            // arrange
+            //Arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Products\UpdateSelles_UpdatesProduct_WhenProductIsValid.json");
+            var json = File.ReadAllText(jsonFilePath);
+
+            var product = JsonConvert.DeserializeObject<Product>(json);
+
             var mockProductRepository = new Mock<IProductRepository>();
-            DateTime now = DateTime.Now;
-            var product = new Product { Id = 1, Name = "Walter", Price = 10, PackagingDate = now };
 
-            // Configuramos el mock para que devuelva el estado que estamos eliminando
-            mockProductRepository.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(new Product {Id = 1, Name = "Walter", Price = 10, PackagingDate = now }); // Simulamos que el estado con Id 1 existe
+            mockProductRepository.Setup(repo => repo.GetByIdAsync(product.Id)).ReturnsAsync(product);  // Simulamos que el producto con Id 1 existe
 
-            mockProductRepository.Setup(repo => repo.DeleteAsync(1));
+            mockProductRepository.Setup(repo => repo.DeleteAsync(product.Id));
 
             var stateService = new ProductService(mockProductRepository.Object);
 
-            // act
+            //Act
             stateService.DeleteProduct(product);
 
-            // assert
-            mockProductRepository.Verify(repo => repo.DeleteAsync(1), Times.Once);
+            //Assert
+            mockProductRepository.Verify(repo => repo.DeleteAsync(product.Id), Times.Once);
         }
 
         [Fact]
         public void UpdateProduct_ThrowsException_WhenProductToUpdateDoesNotExist()
         {
             // Arrange
-            DateTime now = DateTime.Now;
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Products\UpdateProduct_ThrowsException_WhenProductToUpdateDoesNotExist.json");
+            var json = File.ReadAllText(jsonFilePath);
+
+            var product = JsonConvert.DeserializeObject<Product>(json);
 
             var mockProductRepository = new Mock<IProductRepository>();
-            var product = new Product { Id = 999, Name = "Product", Price = 10, PackagingDate = now }; // ID que no existe
-            mockProductRepository.Setup(repo => repo.GetByIdAsync(product.Id)).ReturnsAsync((Product)null); // Simulamos que el vendedor (Product), no existe.
+            mockProductRepository.Setup(repo => repo.GetByIdAsync(product.Id)).ReturnsAsync((Product)null); // Simulamos que el producto no existe.
 
             var stateService = new ProductService(mockProductRepository.Object);
 
@@ -159,26 +177,28 @@ namespace Tests.UnitTests
             Assert.Equal("Product to update not found", exception.Message); // Verificamos que el mensaje de la excepción sea el esperado
         }
 
+
         [Fact]
-        public async void GetStateById_ThrowsException_WhenStateDoesNotExist()
+        public async Task GetStateById_ThrowsException_WhenStateDoesNotExist()
         {
             // Arrange
-            DateTime now = DateTime.Now;
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Products\GetStateById_ThrowsException_WhenStateDoesNotExist.json");
+            var json = File.ReadAllText(jsonFilePath);
+
+            var product = JsonConvert.DeserializeObject<Product>(json);
 
             var mockProductRepository = new Mock<IProductRepository>();
             var productId = 999; // ID que no existe en la base de datos
 
-            // Configuramos el mock para que devuelva el lenguage que estamos buscando
-            mockProductRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Product { Id = 999, Name = "Product", Price = 10, PackagingDate = now }); // Simulamos que el vendedor (Product), con Id 999 que no existe
-
-            mockProductRepository.Setup(repo => repo.GetByIdAsync(productId)).ReturnsAsync((Product)null); // Simulamos que no se encuentra el continente.
+            mockProductRepository.Setup(repo => repo.GetByIdAsync(productId)).ReturnsAsync((Product)null); // Simulamos que el producto con ID 999 no existe
 
             var productService = new ProductService(mockProductRepository.Object);
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<KeyNotFoundException>(() => productService.GetProductById(productId));
-            Assert.Equal("Product not found", exception.Message); // Verificamos que el mensaje de la excepción sea el esperado
+            Assert.Equal("Product not found", exception.Message);
         }
+
     }
 
 
