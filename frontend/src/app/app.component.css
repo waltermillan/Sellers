@@ -11,3 +11,9 @@ button {
 button:hover {
   background-color: #ff3333;  /* Rojo oscuro cuando se pasa el mouse */
 }
+
+.active {
+  font-weight: bold;
+  color: #0D6EFD;
+}
+
