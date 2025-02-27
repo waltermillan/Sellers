@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';  // Asegúrate de tener el servicio de autenticación
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,20 +15,19 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
-    // Llamada al servicio para hacer la autenticación
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
-        // Si la respuesta es exitosa, consideramos que el usuario está autenticado
-        this.authService.loggedIn = true;  // Marca como autenticado
-        this.router.navigate(['/principal']);  // Redirige al usuario después del login
+
+        this.authService.loggedIn = true;
+        this.router.navigate(['/principal']);
       },
       error: (error) => {
-        // Si hay un error (usuario o contraseña incorrectos), mostramos el mensaje de error
+
         console.log(error);
         if (error.status === 500)
           this.loginError = 'Connection to the web API failed. Please check your network connection.';
         else
-          this.loginError = 'Invalid username1 or password';
+          this.loginError = 'Invalid username or password';
       }
   });
   }

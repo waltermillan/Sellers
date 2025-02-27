@@ -12,12 +12,11 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'Users/Auth';
 
-    // Realizamos la llamada HTTP pasando los parámetros usr y psw
+    const url = `${GLOBAL_CONFIG.apiBaseUrl}users/login`;
     const params = new HttpParams().set('usr', username).set('psw', password);
     console.log(url);
-    return this.http.get(url, { params });
+    return this.http.post(url, null, { params });
   }
 
   logout() {

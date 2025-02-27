@@ -4,7 +4,7 @@ using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/saleDTOs")] // Cambié la ruta para que sea plural, api/salesdto (a api/sales)
+[Route("api/sales")] // Cambié la ruta para que sea plural, api/salesdto (a api/sales)
 public class SaleDTOController : ControllerBase
 {
     private readonly SaleDTOService _saleDTOService;
@@ -17,7 +17,7 @@ public class SaleDTOController : ControllerBase
     }
 
     // Obtener un SaleDTO por id
-    [HttpGet("{id}")] // GET api/sales/{id}
+    [HttpGet("{id}/dto")] // GET api/sales/{id}
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -43,7 +43,7 @@ public class SaleDTOController : ControllerBase
         }
     }
 
-    [HttpGet] // GET api/sales (sin el "GetAll")
+    [HttpGet("dto")] // GET api/sales (sin el "GetAll")
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
