@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System;
 
 [ApiController]
-[Route("api/products")] // Cambié la ruta para que sea plural, api/products
+[Route("api/products")]
 public class ProductController : ControllerBase
 {
     private readonly IProductRepository _productRepository;
@@ -17,7 +17,7 @@ public class ProductController : ControllerBase
         _loggingService = loggingService1;
     }
 
-    [HttpGet] // GET api/products
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -37,7 +37,7 @@ public class ProductController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")] // GET api/products/{id}
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -47,7 +47,8 @@ public class ProductController : ControllerBase
         try
         {
             var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
+
+            if (product is null)
                 return NotFound();
 
             return Ok(product);
@@ -60,7 +61,7 @@ public class ProductController : ControllerBase
         }
     }
 
-    [HttpPost] // POST api/products
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -81,7 +82,7 @@ public class ProductController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")] // PUT api/products/{id}
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -90,7 +91,7 @@ public class ProductController : ControllerBase
         var message = string.Empty;
         try
         {
-            if (product == null || id != product.Id)
+            if (product is null || id != product.Id)
                 return BadRequest();
 
             await _productRepository.UpdateAsync(product);
@@ -105,7 +106,7 @@ public class ProductController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")] // DELETE api/products/{id}
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

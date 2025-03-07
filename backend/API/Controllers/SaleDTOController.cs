@@ -4,7 +4,7 @@ using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/sales")] // Cambié la ruta para que sea plural, api/salesdto (a api/sales)
+[Route("api/sales")]
 public class SaleDTOController : ControllerBase
 {
     private readonly SaleDTOService _saleDTOService;
@@ -16,8 +16,7 @@ public class SaleDTOController : ControllerBase
         _loggingService = loggingService;
     }
 
-    // Obtener un SaleDTO por id
-    [HttpGet("{id}/dto")] // GET api/sales/{id}
+    [HttpGet("{id}/dto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -28,10 +27,8 @@ public class SaleDTOController : ControllerBase
         {
             var saleDTO = await _saleDTOService.GetSaleAsync(id);
 
-            if (saleDTO == null)
-            {
-                return NotFound(); // o algún otro manejo de error
-            }
+            if (saleDTO is null)
+                return NotFound();
 
             return Ok(saleDTO);
         }
@@ -43,7 +40,7 @@ public class SaleDTOController : ControllerBase
         }
     }
 
-    [HttpGet("dto")] // GET api/sales (sin el "GetAll")
+    [HttpGet("dto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -56,10 +53,10 @@ public class SaleDTOController : ControllerBase
 
             if (sales is null || !sales.Any())
             {
-                return NoContent(); // Retorna 204 No Content si no hay ventas
+                return NoContent();
             }
 
-            return Ok(sales); // Retorna 200 OK con las ventas
+            return Ok(sales);
         }
         catch (Exception ex)
         {

@@ -21,8 +21,6 @@ public class SellerRepository : ISellerRepository
         return await _context.Sellers.FindAsync(id);
     }
 
-
-
     public async Task AddAsync(Seller seller)
     {
         await _context.Sellers.AddAsync(seller);

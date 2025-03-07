@@ -11,17 +11,12 @@ public class UserRepository : IUserRepository
     {
         _context = context;
     }
-
-    public async Task<bool> GetByUsrPwdAsync(string usr, string pwd)
+    public async Task<User> GetByUsrAsync(string usr)
     {
-        // Buscamos al usuario en la base de datos
-        var user = await _context.Users
-                                .FirstOrDefaultAsync(u => u.UserName == usr && u.PasswordHash == pwd);
-
-        // Retornamos si encontramos un usuario que coincida con el nombre de usuario y la contraseña
-        return user != null;
+        // Busca un usuario en la base de datos por el nombre de usuario
+        return await _context.Users
+                             .FirstOrDefaultAsync(u => u.UserName == usr);
     }
-
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
@@ -32,9 +27,6 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users.FindAsync(id);
     }
-
-
-
     public async Task AddAsync(User user)
     {
         await _context.Users.AddAsync(user);

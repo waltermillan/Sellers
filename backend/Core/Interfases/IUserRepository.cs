@@ -9,7 +9,7 @@ namespace Core.Interfases
 {
     public interface IUserRepository
     {
-        Task<bool> GetByUsrPwdAsync(string usr, string pwd);
+        Task<User> GetByUsrAsync(string usr);
         Task<User> GetByIdAsync(int id);
         Task<IEnumerable<User>> GetAllAsync();
         Task AddAsync(User user);

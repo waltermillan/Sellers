@@ -21,8 +21,6 @@ public class ProductRepository : IProductRepository
         return await _context.Products.FindAsync(id);
     }
 
-
-
     public async Task AddAsync(Product product)
     {
         await _context.Products.AddAsync(product);

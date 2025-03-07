@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System;
 
 [ApiController]
-[Route("api/sales")] // Cambié la ruta para que sea plural, api/sales
+[Route("api/sales")]
 public class SaleController : ControllerBase
 {
     private readonly ISaleRepository _saleRepository;
@@ -17,7 +17,7 @@ public class SaleController : ControllerBase
         _loggingService = loggingService;
     }
 
-    [HttpGet] // GET api/sales
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -37,7 +37,7 @@ public class SaleController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")] // GET api/sales/{id}
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -47,7 +47,8 @@ public class SaleController : ControllerBase
         try
         {
             var sale = await _saleRepository.GetByIdAsync(id);
-            if (sale == null)
+
+            if (sale is null)
                 return NotFound();
 
             return Ok(sale);
@@ -60,7 +61,7 @@ public class SaleController : ControllerBase
         }
     }
 
-    [HttpPost] // POST api/sales
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -69,10 +70,9 @@ public class SaleController : ControllerBase
         var message = string.Empty;
         try
         {
-            if (sale == null)
-            {
+            if (sale is null)
                 return BadRequest("Sale object is null");
-            }
+
             await _saleRepository.AddAsync(sale);
 
             _loggingService.LogInformation($"Sale alta efectuada: {JsonConvert.SerializeObject(sale)}");
@@ -86,7 +86,7 @@ public class SaleController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")] // PUT api/sales/{id}
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -95,7 +95,7 @@ public class SaleController : ControllerBase
         var message = string.Empty;
         try
         {
-            if (sale == null || id != sale.Id)
+            if (sale is null || id != sale.Id)
                 return BadRequest();
 
             await _saleRepository.UpdateAsync(sale);
@@ -111,7 +111,7 @@ public class SaleController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")] // DELETE api/sales/{id}
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

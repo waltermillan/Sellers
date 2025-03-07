@@ -1,10 +1,11 @@
 ﻿using Core.Entities;
 using Core.Interfases;
+using Corer.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 [ApiController]
-[Route("api/users")] // Usamos el plural en la ruta para seguir la convención RESTful
+[Route("api/users")]
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
@@ -16,7 +17,6 @@ public class UserController : ControllerBase
         _loggingService = loggingService;
     }
 
-    // Autenticación de usuario
     [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -25,36 +25,38 @@ public class UserController : ControllerBase
     {
         try
         {
-            // Verificamos si el usuario existe y si la contraseña es correcta
-            var isAuthenticated = await _userRepository.GetByUsrPwdAsync(usr, psw);
+            var user = await _userRepository.GetByUsrAsync(usr);
 
-            if (!isAuthenticated)
+            if (user is null)
             {
-                // Si la autenticación falla, devolvemos 401 (Unauthorized)
                 _loggingService.LogInformation("Intento de inicio de sesión fallido para el usuario: " + usr);
                 return Unauthorized(new { Code = 1, Message = "Invalid username or password" });
             }
 
-            // Si la autenticación es exitosa, se registra la acción y se retorna un 200 OK
+            // Verify if the provided password matches the stored hash
+            var isAuthenticated = PasswordHasher.VerifyPassword(psw, user.PasswordHash);
+
+            if (!isAuthenticated)
+            {
+                _loggingService.LogInformation("Intento de inicio de sesión fallido para el usuario: " + usr);
+                return Unauthorized(new { Code = 1, Message = "Invalid username or password" });
+            }
+
             _loggingService.LogInformation($"Usuario '{usr}' autenticado correctamente.");
 
-            // Retorna un OK con un mensaje (o token si lo generas)
             return Ok(new { Code = 0, Message = "User authenticated successfully" });
 
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             var message = "There was an issue authenticating the user. Please try again later.";
             _loggingService.LogError(message, ex);
 
-            // Devolvemos un código 500 con detalles del error
             return StatusCode(500, new { Message = message, Details = ex.Message });
         }
     }
 
-    // Obtener todos los usuarios
-    [HttpGet] // GET api/users
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -74,8 +76,7 @@ public class UserController : ControllerBase
         }
     }
 
-    // Obtener un usuario por ID
-    [HttpGet("{id}")] // GET api/users/{id}
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -98,8 +99,7 @@ public class UserController : ControllerBase
         }
     }
 
-    // Crear un nuevo usuario
-    [HttpPost] // POST api/users
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -121,8 +121,7 @@ public class UserController : ControllerBase
         }
     }
 
-    // Actualizar un usuario existente
-    [HttpPut("{id}")] // PUT api/users/{id}
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -147,8 +146,7 @@ public class UserController : ControllerBase
         }
     }
 
-    // Eliminar un usuario
-    [HttpDelete("{id}")] // DELETE api/users/{id}
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

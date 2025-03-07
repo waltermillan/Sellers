@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 [ApiController]
-[Route("api/sellers")] // Se cambió para seguir la convención RESTful, ahora la ruta es /api/sellers
+[Route("api/sellers")]
 public class SellerController : ControllerBase
 {
     private readonly ISellerRepository _sellerRepository;
@@ -16,8 +16,7 @@ public class SellerController : ControllerBase
         _loggingService = loggingService;
     }
 
-    // Obtener todos los vendedores
-    [HttpGet] // GET api/sellers
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -37,8 +36,7 @@ public class SellerController : ControllerBase
         }
     }
 
-    // Obtener un vendedor por ID
-    [HttpGet("{id}")] // GET api/sellers/{id}
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -61,8 +59,7 @@ public class SellerController : ControllerBase
         }
     }
 
-    // Crear un nuevo vendedor
-    [HttpPost] // POST api/sellers
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -83,8 +80,7 @@ public class SellerController : ControllerBase
         }
     }
 
-    // Actualizar un vendedor existente
-    [HttpPut("{id}")] // PUT api/sellers/{id}
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -108,8 +104,7 @@ public class SellerController : ControllerBase
         }
     }
 
-    // Eliminar un vendedor
-    [HttpDelete("{id}")] // DELETE api/sellers/{id}
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

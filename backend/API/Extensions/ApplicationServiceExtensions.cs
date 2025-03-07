@@ -9,7 +9,7 @@ public static class ApplicationServiceExtensions
         services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy", builder =>
-                builder.WithOrigins("http://localhost:4200")  // Permite solo este origen en desarrollo
+                builder.WithOrigins("http://localhost:4200")  // Allows only this origin in development
                     .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .AllowAnyHeader());
         });
@@ -25,11 +25,8 @@ public static class ApplicationServiceExtensions
 
         services.AddScoped<SaleDTOService>();
 
-        // En Program.cs
         services.AddScoped<ILoggingService, SerilogLoggingService>();
 
-
-        // Other service registrations...
         services.AddControllers();
     }
 }

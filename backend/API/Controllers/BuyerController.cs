@@ -17,7 +17,7 @@ public class BuyerController : ControllerBase
         _loggingService = loggingService;
     }
 
-    [HttpGet] // GET api/buyers
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -38,7 +38,7 @@ public class BuyerController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")] // GET api/buyers/{id}
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -48,7 +48,8 @@ public class BuyerController : ControllerBase
         try
         {
             var buyer = await _buyerRepository.GetByIdAsync(id);
-            if (buyer == null)
+
+            if (buyer is null)
                 return NotFound();
 
             return Ok(buyer);
@@ -61,7 +62,7 @@ public class BuyerController : ControllerBase
         }
     }
 
-    [HttpPost] // POST api/buyers
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -85,7 +86,7 @@ public class BuyerController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")] // PUT api/buyers/{id}
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -94,7 +95,7 @@ public class BuyerController : ControllerBase
         var message = string.Empty;
         try
         {
-            if (buyer == null || id != buyer.Id)
+            if (buyer is null || id != buyer.Id)
                 return BadRequest("Buyer data is invalid.");
 
             await _buyerRepository.UpdateAsync(buyer);
@@ -109,7 +110,7 @@ public class BuyerController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")] // DELETE api/buyers/{id}
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

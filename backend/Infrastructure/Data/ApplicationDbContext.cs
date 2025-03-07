@@ -11,13 +11,13 @@ public class ApplicationDbContext : DbContext
     public DbSet<Sale> Sales { get; set; }
     public DbSet<User> Users { get; set; }
 
-    // Constructor con parámetros (usado en tiempo de ejecución)
+    // Constructor with parameters (used at runtime)
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
 
-    // Constructor sin parámetros (usado en tiempo de diseño)
+    // Constructor without parameters (used at design time)
     public ApplicationDbContext()
     {
     }
@@ -25,6 +25,5 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        // Configura tu modelo aquí si es necesario
     }
 }
