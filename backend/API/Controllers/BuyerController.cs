@@ -21,7 +21,6 @@ public class BuyerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
     public async Task<ActionResult<IEnumerable<Buyer>>> GetAll()
     {
         var message = string.Empty;

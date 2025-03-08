@@ -10,48 +10,42 @@ import { MessageService } from '../services/message.service';
 })
 export class DeleteSellersComponent implements OnInit {
 
-  //Declaración de variables
   public sellers: Seller[] = [];
 
   showMessage = false;
   message = '';
 
-  //Constructor
   constructor(private sellerService:SellerService,
               public messageService:MessageService
   ) {
     
   }
 
-  //////////////////////////////////////////////Métodos//////////////////////////////////////////////
+  //////////////////////////////////////////////Methods//////////////////////////////////////////////
 
-  //NgOnInit --> es un hook (gancho de ciclo de vida) en Angular que forma parte de los Lifecycle Hooks. 
-  //Se ejecuta una vez que Angular ha inicializado todas las propiedades de un componente, es decir, 
-  //cuando la vista y los datos del componente están listos.
+  //NgOnInit --> is a hook (lifecycle hook) in Angular that is part of the Lifecycle Hooks.
+  //It is executed once Angular has initialized all the properties of a component, ie,
+  //when the component's view and data are ready.
   ngOnInit(){
     this.getAllSellers();
   }
 
-  //GetAllSellers --> obtiene un array de Seller donde se guardan todos los datos de vendedores de la API de clientes.
   getAllSellers(){
     this.sellerService.getAllSellers().subscribe({
       next: (data: Seller[]) => {
         this.sellers = data;
       },
       error: (error) => {
-        console.error("Error al cargar vendedores");
+        console.error("Error loading sellers");
         if (error.status === 0) {
-          // Este es un error típico de conexión (no hay conexión al servidor)
           this.messageService.showErrorMessage('Could not connect to the server. Check your Internet connection or try again later.');
         } else {
-          // Otros errores de la API
           this.messageService.showErrorMessage('There was an error listing sellers. Please try again.');
         }
       }
     });
   }
 
-  //DeleteSellers --> borra un vendedor de la lista de vendedores. los datos de vendedores de la API de clientes.
   deleteSellers(id:number){
     this.sellerService.deleteSeller(id).subscribe({
       next: (data) => {
@@ -59,12 +53,11 @@ export class DeleteSellersComponent implements OnInit {
         this.getAllSellers();
       },
       error: (error) => {
-        console.error("Error al cargar vendedores");
+        console.error("Error loandin sellers.");
       }
     });
   }
 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.messageService.showMessage = false;
   }

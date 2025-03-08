@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 
 import { Seller } from '../models/seller.model';
 import { Product } from '../models/product.model';
@@ -20,12 +20,10 @@ import { CommonService } from '../services/common.service';
 })
 export class AddSalesComponent implements OnInit {
 
-  // Lista de elementos para el listbox
   sellers:Seller[] = [];
   products:Product[] = [];
   buyers:Buyer[] = [];
 
-  // Variable para almacenar el elemento seleccionado
   selectedIdSeller: number | null = null;
   selectedIdProduct: number | null = null;
   selectedIdBuyer: number | null = null;
@@ -45,10 +43,8 @@ export class AddSalesComponent implements OnInit {
               private buyerService:BuyerService,
               private saleService:SaleService,
               public messageService:MessageService,
-              private commonService: CommonService
-  ) {
-
-  }
+              private commonService: CommonService)
+  {}
 
   ngOnInit(): void {
     this.getAllBuyers();
@@ -100,7 +96,7 @@ export class AddSalesComponent implements OnInit {
         this.sellers = data;
       },
       error: (error) => {
-        console.log('Error al cargar vendedores.');
+        console.log('Error loading sellers.');
       }
     });
   }
@@ -111,7 +107,7 @@ export class AddSalesComponent implements OnInit {
         this.buyers = data;
       },
       error: (error) => {
-        console.log('Error al cargar compradores.');
+        console.log('Error loading buyers.');
       }
     });
   }
@@ -122,12 +118,11 @@ export class AddSalesComponent implements OnInit {
         this.products = data;
       },
       error: (error) => {
-        console.log('Error al cargar productos.');
+        console.log('Error loading products.');
       }
     });
   }
 
-  // Método para gestionar la selección de un solo elemento
   selectItem(item: number, type:number) {
 
     switch(type){
@@ -157,8 +152,6 @@ export class AddSalesComponent implements OnInit {
     this.validateForm();
   }
 
- 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.messageService.showMessage = false;
   }

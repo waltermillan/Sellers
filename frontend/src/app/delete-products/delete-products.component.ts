@@ -13,10 +13,8 @@ export class DeleteProductsComponent implements OnInit {
   products:Product[] = [];
 
   constructor(private productService:ProductService,
-              public messageService:MessageService
-  ) {
-
-  }
+              public messageService:MessageService) 
+  {}
 
   ngOnInit(){
     this.getAll();
@@ -28,7 +26,7 @@ export class DeleteProductsComponent implements OnInit {
         this.products = data;
       },
       error: (error) => {
-        console.error('Error al cargar productos.');
+        console.error('Error loading products.');
         this.messageService.showMessage = true;
         this.messageService.message = 'There was an error listing products. Please try again.'
       }
@@ -38,18 +36,17 @@ export class DeleteProductsComponent implements OnInit {
   deleteProduct(id:number){
     this.productService.delete(id).subscribe({
       next:(data) => {
-        console.log('Producto borrado.');
+        console.log('Product deleted successfully.');
         this.messageService.showMessage = true;
-        this.messageService.message = 'product deleted.';
+        this.messageService.message = 'product deleted successfully.';
         this.getAll();
       },
       error: (error) => {
-        console.error('Error al borrar producto.')
+        console.error('Error deleting product.')
       }
     });
   }
 
-    // Método para cerrar el mensaje
   closeMessage(): void {
     this.messageService.showMessage = false;
   }

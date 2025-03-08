@@ -13,6 +13,6 @@ export class AppComponent {
   constructor(public authService: AuthService) {}
 
   logout() {
-    this.authService.logout();  // Cierra la sesión
+    this.authService.logout();
   }
 }

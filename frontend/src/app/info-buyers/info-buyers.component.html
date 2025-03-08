@@ -1,5 +1,9 @@
 <div style="max-height: 500px; overflow-y: auto">
-  <table id="tblBuyers" class="table table-bordered" style="width: 100%; border-collapse: collapse">
+  <table
+    id="tblBuyers"
+    class="table table-bordered"
+    style="width: 100%; border-collapse: collapse"
+  >
     <th>ID</th>
     <th>Name</th>
     <th>Social Security Number</th>
@@ -13,26 +17,35 @@
   </table>
 </div>
 
-<!-- Contenedor de exportacion (EXCEL/PDF)-->
 <div>
-    <table style="width: 100%;">
-        <tr>
-        <td *ngIf="buyers.length > 0; else msgNoData">
-            <img src="assets/images/excel.svg" style="max-width: 30px;max-height: 30px;" 
-            (click)="exportToExcel()" class="cursor-img" class="cursor-img" title="Export to EXCEL"> 
-            <img src="assets/images/pdf.svg" style="max-width: 30px;max-height: 30px;" 
-            (click)="exportToPDF()" class="cursor-img" class="cursor-img" title="Export to PDF">                    
-        </td>    
-        </tr>
-    </table>
+  <table style="width: 100%">
+    <tr>
+      <td *ngIf="buyers.length > 0; else msgNoData">
+        <img
+          src="assets/images/excel.svg"
+          style="max-width: 30px; max-height: 30px"
+          (click)="exportToExcel()"
+          class="cursor-img"
+          class="cursor-img"
+          title="Export to EXCEL"
+        />
+        <img
+          src="assets/images/pdf.svg"
+          style="max-width: 30px; max-height: 30px"
+          (click)="exportToPDF()"
+          class="cursor-img"
+          class="cursor-img"
+          title="Export to PDF"
+        />
+      </td>
+    </tr>
+  </table>
 </div>
 
-<!-- Contenedor de sin datos (No Data) -->
 <ng-template #msgNoData>
-  <div style="text-align: center">No hay datos...</div>
+  <div style="text-align: center">No data available...</div>
 </ng-template>
 
-<!-- Contenedor para el mensaje -->
 <div *ngIf="messageService.showMessage" class="message-container">
   <div class="message-box">
     <p>{{ messageService.message }}</p>

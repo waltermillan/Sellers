@@ -15,7 +15,7 @@ export class UpdateProductsComponent implements OnInit {
   showMessage:boolean = false;
   message: string = '';
 
-  productForm!: FormGroup; // Formulario reactivo
+  productForm!: FormGroup;
 
   updProduct: Product = {
     id: 0,
@@ -30,13 +30,9 @@ export class UpdateProductsComponent implements OnInit {
 
   }
 
- // Maneja el cambio de selección
  onProductChange(): void {
   if (this.selectedProductId != null) {
-    //console.log('Vendedor encontrado:', this.selectedSellerId);
     const selectedSeller = this.products.find(s => s.id == this.selectedProductId);
-
-    //console.log('Vendedor encontrado:', selectedSeller);
 
     if (selectedSeller) {
       this.updProduct.id = selectedSeller.id;
@@ -44,31 +40,26 @@ export class UpdateProductsComponent implements OnInit {
       this.updProduct.price = selectedSeller.price;
       this.updProduct.stock = selectedSeller.stock;
       
-      // Convertimos la fecha a un objeto Date si es un string
       if (typeof selectedSeller.packagingDate === 'string') {
         this.updProduct.packagingDate = new Date(selectedSeller.packagingDate);
       } else {
         this.updProduct.packagingDate = selectedSeller.packagingDate;
       }
 
-      // Convertir la fecha al formato 'yyyy-MM-dd' para el input
       const formattedDate = this.updProduct.packagingDate?.toISOString().split('T')[0];
-      this.productForm.controls['packagingDate'].setValue(formattedDate);  // Asignamos al formulario en formato 'yyyy-MM-dd'
+      this.productForm.controls['packagingDate'].setValue(formattedDate);
       } 
       else {
-        console.warn('Vendedor no encontrado');
+        console.warn('Seller not found');
       }
     }
   }
   
-
   get packagingDate(): string {
-    // Si 'birthday' es un objeto Date, lo convertimos a 'yyyy-MM-dd'
     return this.updProduct.packagingDate ? this.updProduct.packagingDate.toISOString().split('T')[0] : '';
   }
   
   set packagingDate(value: string) {
-    // Convertimos el string 'yyyy-MM-dd' de vuelta a un objeto Date
     this.updProduct.packagingDate = new Date(value);
   }
 
@@ -79,12 +70,12 @@ export class UpdateProductsComponent implements OnInit {
   updateProduct(){
     this.productService.update(this.updProduct,this.updProduct.id).subscribe({
       next: (data) => {
-        console.log('Producto actualizado.');
+        console.log('Product successfully updated.');
         this.showMessage = true;
         this.message = 'Product successfully updated.';
       },
       error: (error) => {
-        console.error('Error al actualizar producto.');
+        console.error('Error updating product');
         this.showMessage = true;
         this.message = 'Error updating product.';
       }
@@ -105,23 +96,21 @@ export class UpdateProductsComponent implements OnInit {
   getAllProductos(){
     this.productService.getAll().subscribe({
       next: (data: Product[]) => {
-        console.log('Datos de productos cargados correctamente');
+        console.log('Products loaded successfully.');
         this.products = data;
       },
       error: (error) => {
-        console.error('Error al cargar datos de productos.');
+        console.error('Error when loading product data.');
         this.showMessage = true;
         this.message = 'Error when loading product data.';
       }
     })
   }
 
-  // Método para mostrar el mensaje después de un alta/modificación
   showSuccessMessage(action: string): void {
     this.message = `¡${action} exitoso!`;
     this.showMessage = true;
     
-    // Cerrar el mensaje después de 3 segundos
     setTimeout(() => this.closeMessage(), 3000);
   }
 
@@ -129,11 +118,9 @@ export class UpdateProductsComponent implements OnInit {
     this.message = `¡${action}!`;
     this.showMessage = true;
     
-    // Cerrar el mensaje después de 3 segundos
     setTimeout(() => this.closeMessage(), 3000);
   }
 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.showMessage = false;
   }

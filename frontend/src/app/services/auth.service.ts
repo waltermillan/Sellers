@@ -20,10 +20,10 @@ export class AuthService {
   }
 
   logout() {
-    this.loggedIn = false;  // Marca como no autenticado
+    this.loggedIn = false;
   }
 
   isLoggedIn() {
-    return this.loggedIn;  // Verifica si el usuario está autenticado
+    return this.loggedIn;
   }
 }

@@ -28,8 +28,8 @@ import { PrincipalComponent } from './principal/principal.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },  // Redirige a login al inicio
-  { path: 'principal', component: PrincipalComponent }, // Página principal
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'principal', component: PrincipalComponent },
   { path: 'info-sellers', component: InfoSellersComponent },
   { path: 'add-sellers', component: AddSellersComponent },
   { path: 'update-sellers', component: UpdateSellersComponent },
@@ -48,7 +48,6 @@ const routes: Routes = [
   { path: 'delete-sales', component: DeleteSalesComponent },
   { path: 'info-users', component: InfoUsersComponent }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

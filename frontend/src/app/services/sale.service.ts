@@ -11,18 +11,15 @@ export class SaleService {
   
   constructor(private http: HttpClient) { }
 
-  //Get all Sales
   getAll():Observable<Sale[]>{
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales' ;
     console.log(url);
     return this.http.get<Sale[]>(url);
   }
 
-  //Add new Sale
   add(sale:Sale){
 
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales' ;
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -31,13 +28,11 @@ export class SaleService {
     return this.http.post(url, sale, { headers });
   }
 
-  //Update a Sale
   update(sale:Sale, id: number){
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/' + id;
     return this.http.put(url, sale);
   }
 
-  //Delete a Sale
   delete(id:number){
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/' + id;
     return this.http.delete(url);

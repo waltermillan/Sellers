@@ -1,12 +1,15 @@
 <form (ngSubmit)="onSubmit()" #sellerForm="ngForm">
-  <div style="max-height: 500px; overflow-y: auto;">
+  <div style="max-height: 500px; overflow-y: auto">
     <table>
       <tr>
+        <td>Seller:</td>
         <td>
-          Seller:
-        </td>
-        <td>
-          <select [(ngModel)]="selectedSellerId" name="seller" [ngModelOptions]="{standalone: true}" (change)="onSellerChange()" class="fixed-width">
+          <select
+            [(ngModel)]="selectedSellerId"
+            name="seller"
+            [ngModelOptions]="{ standalone: true }"
+            (change)="onSellerChange()"
+            class="fixed-width">
             <option *ngFor="let s of sellers" [value]="s.id">
               {{ s.name }}
             </option>
@@ -18,32 +21,46 @@
           <label>Name:</label>
         </td>
         <td>
-          <input type="text" [(ngModel)]="updSeller.name" name="name" class="form-control fixed-width" required>                  
+          <input
+            type="text"
+            [(ngModel)]="updSeller.name"
+            name="name"
+            class="form-control fixed-width"
+            required/>
         </td>
         <td>
           <label>Birthday:</label>
         </td>
         <td>
-          <input type="date" [(ngModel)]="birthday" name="birthday" class="form-control fixed-width" required>                
+          <input
+            type="date"
+            [(ngModel)]="birthday"
+            name="birthday"
+            class="form-control fixed-width"
+            required/>
         </td>
       </tr>
       <tr>
         <td colspan="2">
-          <br>
+          <br />
         </td>
       </tr>
       <tr>
         <td colspan="2">
-          <input class="btn btn-primary mt-2" type="submit" value="Update" [disabled]="!sellerForm.valid">
+          <input
+            class="btn btn-primary mt-2"
+            type="submit"
+            value="Update"
+            [disabled]="!sellerForm.valid"/>
         </td>
       </tr>
     </table>
   </div>
 </form>
-  <!-- Contenedor para el mensaje -->
-  <div *ngIf="showMessage" class="message-container">
-    <div class="message-box">
-      <p>{{ message }}</p>
-      <button (click)="closeMessage()">Cerrar</button>
-    </div>
+
+<div *ngIf="showMessage" class="message-container">
+  <div class="message-box">
+    <p>{{ message }}</p>
+    <button (click)="closeMessage()">Cerrar</button>
   </div>
+</div>

@@ -8,7 +8,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
-// Registra los servicios de AutoMapper
+// Register AutoMapper services
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.ConfigureServices();
 

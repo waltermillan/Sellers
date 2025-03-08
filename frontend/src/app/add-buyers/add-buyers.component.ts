@@ -17,11 +17,8 @@ export class AddBuyersComponent implements OnInit {
   };
 
   constructor(private buyerService: BuyerService,
-              public messageService:MessageService
-  ) {
-    
-  }
-
+              public messageService:MessageService)
+{}
   ngOnInit(){
 
   }
@@ -33,19 +30,18 @@ export class AddBuyersComponent implements OnInit {
   addBuyer(){
     this.buyerService.add(this.newBuyer).subscribe({
       next: (data) => {
-        console.log('Alta de un comprador nuevo');
+        console.log('Buyer addedd Successfully');
         this.messageService.showMessage = true;
-        this.messageService.message = 'Successful registration buyer';
+        this.messageService.message = 'Buyer addedd Successfully';
       },
       error: (error) => {
-        console.error('error al dar de alta un comprador nuevo. ', error);
+        console.error('error adding buyer. ', error);
         this.messageService.showMessage = true;
-        this.messageService.message = 'error when registering a new buyer.';
+        this.messageService.message = 'error adding buyer.';
       }
     })
   }
 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.messageService.showMessage = false;
   }

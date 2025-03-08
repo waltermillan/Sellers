@@ -16,7 +16,7 @@ export class UpdateSellersComponent {
   showMessage = false;
   message = '';
 
-  sellerForm!: FormGroup; // Formulario reactivo
+  sellerForm!: FormGroup;
   updSeller: Seller = {
     id: 0,
     name: '',
@@ -27,13 +27,11 @@ export class UpdateSellersComponent {
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    // Inicializar el formulario con validaciones
     this.sellerForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       birthday: ['', [Validators.required]]
     });
 
-    // Cargar todos los vendedores
     this.getAllSellers();
   }
 
@@ -45,38 +43,31 @@ export class UpdateSellersComponent {
       error: (error) => {
         console.error('Error al cargar vendedores', error);
         if (error.status === 0) {
-          // Este es un error típico de conexión (no hay conexión al servidor)
           this.showErrorMessage('Could not connect to the server. Check your Internet connection or try again later. successful!');
         } else {
-          // Otros errores de la API
           this.showErrorMessage('There was an error adding the seller. Please try again.');
         }
       }
     });
   }
 
-  // Maneja el cambio de selección
   onSellerChange(): void {
     if (this.selectedSellerId != null) {
-      //console.log('Vendedor encontrado:', this.selectedSellerId);
       const selectedSeller = this.sellers.find(s => s.id == this.selectedSellerId);
-  
-      //console.log('Vendedor encontrado:', selectedSeller);
   
       if (selectedSeller) {
         this.updSeller.id = selectedSeller.id;
         this.updSeller.name = selectedSeller.name;
         
-        // Convertimos la fecha a un objeto Date si es un string
+
         if (typeof selectedSeller.birthday === 'string') {
           this.updSeller.birthday = new Date(selectedSeller.birthday);
         } else {
           this.updSeller.birthday = selectedSeller.birthday;
         }
   
-        // Convertir la fecha al formato 'yyyy-MM-dd' para el input
         const formattedDate = this.updSeller.birthday?.toISOString().split('T')[0];
-        this.sellerForm.controls['birthday'].setValue(formattedDate);  // Asignamos al formulario en formato 'yyyy-MM-dd'
+        this.sellerForm.controls['birthday'].setValue(formattedDate);
       } else {
         console.warn('Vendedor no encontrado');
       }
@@ -84,24 +75,19 @@ export class UpdateSellersComponent {
   }
 
   get birthday(): string {
-    // Si 'birthday' es un objeto Date, lo convertimos a 'yyyy-MM-dd'
     return this.updSeller.birthday ? this.updSeller.birthday.toISOString().split('T')[0] : '';
   }
   
   set birthday(value: string) {
-    // Convertimos el string 'yyyy-MM-dd' de vuelta a un objeto Date
     this.updSeller.birthday = new Date(value);
   }
   
 
   updateSeller(): void {
-    //console.log('pre-Vendedor actualizado:', this.updSeller);
     this.sellerService.updateSeller(this.updSeller, this.updSeller.id).subscribe({
       next: (data) => {
         
         this.showSuccessMessage('Seller successfully upgraded.');
-
-        // alert('Vendedor actualizado exitosamente!');
       },
       error: (error) => {
         console.error('Error al actualizar el vendedor:', error);
@@ -114,25 +100,20 @@ export class UpdateSellersComponent {
     this.updateSeller();
   }
 
-  // Método para mostrar el mensaje después de un alta/modificación
   showSuccessMessage(action: string): void {
     this.message = `${action}`;
     this.showMessage = true;
-    
-    // Cerrar el mensaje después de 3 segundos
+
     setTimeout(() => this.closeMessage(), 3000);
   }
 
-  // Método para mostrar el mensaje después de un alta/modificación
   showErrorMessage(action: string): void {
     this.message = `${action}`;
     this.showMessage = true;
     
-    // Cerrar el mensaje después de 3 segundos
     setTimeout(() => this.closeMessage(), 3000);
   }
 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.showMessage = false;
   }

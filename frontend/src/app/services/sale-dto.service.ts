@@ -13,7 +13,6 @@ export class SaleDTOService {
 
   constructor(private http: HttpClient) { }
 
-  //Get all Sales
   getAll():Observable<SaleDTO[]>{
 
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/dto';

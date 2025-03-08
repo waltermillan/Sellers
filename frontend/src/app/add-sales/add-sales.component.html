@@ -1,68 +1,82 @@
 <div style="max-height: 500px; overflow-y: auto">
-<form (ngSubmit)="onSubmit()" #saleForm="ngForm">
-  <table style="width: 100%; border-collapse: collapse">
-    <thead style="position: sticky; top: 0; background-color: #fff; z-index: 1">
-      <tr>
-        <td style="width: 5%"></td>
-        <td style="width: 30%"><b>Seller</b></td>
-        <td style="width: 30%"><b>Product</b></td>
-        <td style="width: 30%"><b>Buyer</b></td>
-        <td style="width: 5%"></td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td></td>
-        <td>
-          <div class="listbox">
-            <ul style="width: 100%">
-              <li *ngFor="let item of sellers" (click)="selectItem(item.id,1)" [class.selected]="selectedIdSeller === item.id" required>
-                {{ item.name }}
-              </li>
-            </ul>
-          </div>
-
-          <!-- <p>Elemento seleccionado: {{ selectedIdSeller }}</p> -->
-        </td>
-        <td>
-          <div class="listbox">
-            <ul style="width: 100%">
-                <li *ngFor="let item of products" (click)="selectItem(item.id,2)" [class.selected]="selectedIdProduct === item.id" required>
-                    {{ item.name }}
-                  </li>
-            </ul>
-          </div>
-
-          <!-- <p>Elemento seleccionado: {{ selectedIdProduct }}</p> -->
-        </td>
-        <td>
-          <div class="listbox">
-            <ul style="width: 100%">
-                <li *ngFor="let item of buyers" (click)="selectItem(item.id,3)" [class.selected]="selectedIdBuyer === item.id" required>
-                    {{ item.name }}
+  <form (ngSubmit)="onSubmit()" #saleForm="ngForm">
+    <table style="width: 100%; border-collapse: collapse">
+      <thead>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 30%"><b>Seller</b></td>
+          <td style="width: 30%"><b>Product</b></td>
+          <td style="width: 30%"><b>Buyer</b></td>
+          <td style="width: 5%"></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td>
+            <div class="listbox">
+              <ul style="width: 100%">
+                <li
+                  *ngFor="let item of sellers"
+                  (click)="selectItem(item.id, 1)"
+                  [class.selected]="selectedIdSeller === item.id"
+                  required>
+                  {{ item.name }}
                 </li>
-            </ul>
-          </div>
+              </ul>
+            </div>
 
-          <!-- <p>Elemento seleccionado: {{ selectedIdBuyer }}</p> -->
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td colspan="2"></td>
-        <td style="text-align: center;">
-            <input type="submit" value="New Sale" class="btn btn-primary mt-2" [disabled]="!isFormValid" >
-        </td>
-        <td colspan="2"></td>
-      </tr>
-    </tbody>
-  </table>
-</form>
+          </td>
+          <td>
+            <div class="listbox">
+              <ul style="width: 100%">
+                <li
+                  *ngFor="let item of products"
+                  (click)="selectItem(item.id, 2)"
+                  [class.selected]="selectedIdProduct === item.id"
+                  required>
+                  {{ item.name }}
+                </li>
+              </ul>
+            </div>
+
+          </td>
+          <td>
+            <div class="listbox">
+              <ul style="width: 100%">
+                <li
+                  *ngFor="let item of buyers"
+                  (click)="selectItem(item.id, 3)"
+                  [class.selected]="selectedIdBuyer === item.id"
+                  required>
+                  {{ item.name }}
+                </li>
+              </ul>
+            </div>
+
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td style="text-align: center">
+            <input
+              type="submit"
+              value="New Sale"
+              class="btn btn-primary mt-2"
+              [disabled]="!isFormValid"
+            />
+          </td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
 </div>
-  <!-- Contenedor para el mensaje -->
-  <div *ngIf="messageService.showMessage" class="message-container">
-    <div class="message-box">
-      <p>{{ messageService.message }}</p>
-      <button (click)="closeMessage()">Close</button>
-    </div>
+
+<div *ngIf="messageService.showMessage" class="message-container">
+  <div class="message-box">
+    <p>{{ messageService.message }}</p>
+    <button (click)="closeMessage()">Close</button>
+  </div>
 </div>

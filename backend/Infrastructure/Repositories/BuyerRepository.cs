@@ -36,7 +36,8 @@ public class BuyerRepository : IBuyerRepository
     public async Task DeleteAsync(int id)
     {
         var buyer = await _context.Buyers.FindAsync(id);
-        if (buyer != null)
+
+        if (buyer is not null)
         {
             _context.Buyers.Remove(buyer);
             await _context.SaveChangesAsync();

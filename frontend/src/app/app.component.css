@@ -1,6 +1,5 @@
-/* Estilo para el botón de Log Out */
 button {
-  background-color: #ff4d4d;  /* Rojo claro */
+  background-color: #ff4d4d;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -9,7 +8,7 @@ button {
 }
 
 button:hover {
-  background-color: #ff3333;  /* Rojo oscuro cuando se pasa el mouse */
+  background-color: #ff3333;
 }
 
 .active {

@@ -13,36 +13,31 @@ import { GLOBAL_CONFIG } from '../config/config.global';
 })
 export class InfoBuyersComponent implements OnInit {
 
-  
   buyers:Buyer[] = [];
 
   constructor(private buyerService: BuyerService,
               public messageService: MessageService,
               private exportService: ExportService,
-              private commonService: CommonService
-  ) {
- 
-  }
+              private commonService: CommonService) 
+  {}
 
   ngOnInit(){
     this.getAllBuyers();
   }
 
-  //Obtiene todos los compradores
   getAllBuyers():void{
     this.buyerService.getAll().subscribe({
       next: (data) => {
         this.buyers = data;
       },
       error: (error) => {
-        console.error('Error al cargar los datos de los compradores.');
+        console.error('There was an error listing buyers.');
         this.messageService.showMessage = true;
         this.messageService.message = 'There was an error listing buyers. Please try again.';
       }
     });
   }
  
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.messageService.showMessage = false;
   }

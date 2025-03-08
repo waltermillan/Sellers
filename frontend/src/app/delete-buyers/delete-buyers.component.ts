@@ -13,10 +13,8 @@ export class DeleteBuyersComponent {
   buyers:Buyer[] = [];
 
   constructor(private buyerService:BuyerService,
-              public messageService:MessageService
-  ) {
-    
-  }
+              public messageService:MessageService)
+{}
 
   ngOnInit(){
     this.getAllBuyers();
@@ -33,7 +31,7 @@ export class DeleteBuyersComponent {
 
       },
       error: (error) => {
-        console.log('Error al cargar datos de compradores.');
+        console.log('Error loading buyers.');
         this.messageService.showMessage = true;
         this.messageService.message = 'There was an error listing buyers. Please try again.'       
       }
@@ -44,15 +42,15 @@ export class DeleteBuyersComponent {
   {
     this.buyerService.delete(id).subscribe({
       next: (data) => {
-        console.log('Comprador eliminado.');
+        console.log('buyer deleted successfully.');
         this.messageService.showMessage = true;
         this.messageService.message = 'Buyer successfully removed.';
         this.getAllBuyers();
       },
       error: (error) => {
-        console.log('Error al eliminar comprador.');
+        console.log('Error deleting buyer.');
         this.messageService.showMessage = true;
-        this.messageService.message = 'Error al eliminar comprador.';
+        this.messageService.message = 'Error deleting buyer.';
       }
     });
   }

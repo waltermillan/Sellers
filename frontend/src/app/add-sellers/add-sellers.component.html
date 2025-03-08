@@ -1,43 +1,56 @@
-
 <form (ngSubmit)="onSubmit()" #sellerForm="ngForm">
-<div style="max-height: 500px; overflow-y: auto;">
+  <div style="max-height: 500px; overflow-y: auto">
     <table>
-        <tr>
-            <td>
-                 Name:              
-            </td>
-            <td>
-                <input type="text" [(ngModel)]="newSeller.name" name="name" class="form-control" name="name" required class="fixed-width">                  
-           </td>
-        </tr>
-        <tr>
-            <td>
-                Birthday:                    
-            </td>
-            <td>
-                <input type="date" [(ngModel)]="newSeller.birthday" class="form-control" name="birthday" required class="fixed-width">                
-           </td>
-        </tr>  
-        <tr>
-            <td colspan="2">
-       <br>
-            </td>
-        </tr>
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="newSeller.name"
+            name="name"
+            class="form-control"
+            name="name"
+            required
+            class="fixed-width"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Birthday:</td>
+        <td>
+          <input
+            type="date"
+            [(ngModel)]="newSeller.birthday"
+            class="form-control"
+            name="birthday"
+            required
+            class="fixed-width"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br />
+        </td>
+      </tr>
 
-        <tr>
-            <td colspan="2">
-                <input class="btn btn-primary" type="submit" value="Create" [disabled]="!sellerForm.valid">
-            </td>
-        </tr>
+      <tr>
+        <td colspan="2">
+          <input
+            class="btn btn-primary"
+            type="submit"
+            value="Create"
+            [disabled]="!sellerForm.valid"
+          />
+        </td>
+      </tr>
     </table>
-</div>
+  </div>
 </form>
 
-  <!-- Contenedor para el mensaje -->
-  <div *ngIf="messageService.showMessage" class="message-container">
-    <div class="message-box">
-      <p>{{ messageService.message }}</p>
-      <button (click)="closeMessage()">Close</button>
-    </div>
+<div *ngIf="messageService.showMessage" class="message-container">
+  <div class="message-box">
+    <p>{{ messageService.message }}</p>
+    <button (click)="closeMessage()">Close</button>
   </div>
-  
+</div>

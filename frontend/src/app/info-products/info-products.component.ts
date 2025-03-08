@@ -18,10 +18,8 @@ export class InfoProductsComponent implements OnInit {
   constructor(private productService: ProductService,
               public messageService: MessageService,
               private commonService: CommonService,
-              private exportService: ExportService
-  ) {
-
-  }
+              private exportService: ExportService) 
+  {}
 
   ngOnInit(): void {
     this.getAll();
@@ -31,7 +29,7 @@ export class InfoProductsComponent implements OnInit {
     this.productService.getAll().subscribe({
       next: (data:Product[]) => {
         this.products = data.filter(p=> p.stock > 0);
-        console.log('Listar Productos');
+        console.log('List Products');
       },
       error: (error) => {
         console.log('There was an error listing products. Please try again.');

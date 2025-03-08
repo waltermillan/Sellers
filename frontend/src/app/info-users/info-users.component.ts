@@ -34,7 +34,7 @@ export class InfoUsersComponent implements OnInit {
         this.users = data;
       },
       error: (error) => {
-        console.log('Error al cargar datos del usuario.');
+        console.log('Error loading data users');
       }
     });
   }
@@ -47,7 +47,7 @@ export class InfoUsersComponent implements OnInit {
         this.messageService.message = 'User successfully added.';
       },
       error: (error) => {
-        console.error('Error al agregar nuevo usuario', error);
+        console.error('Error adding new user', error);
       }
     });
   }
@@ -60,7 +60,7 @@ export class InfoUsersComponent implements OnInit {
         this.messageService.message = 'User successfully deleted.';
       },
       error: (error) => {
-        console.error('Error al quitar usuario', error);
+        console.error('Error deleting user.', error);
       }
     });
   }

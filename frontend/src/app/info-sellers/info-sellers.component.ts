@@ -12,11 +12,9 @@ import { GLOBAL_CONFIG } from '../config/config.global';
   styleUrl: './info-sellers.component.css',
 })
 export class InfoSellersComponent implements OnInit {
-  //Declaración de variables
 
   public sellers: Seller[] = [];
 
-  //Constructor
   constructor(
     private sellerService: SellerService,
     public messageService: MessageService,
@@ -24,17 +22,15 @@ export class InfoSellersComponent implements OnInit {
     private commonService: CommonService
   ) {}
 
-  //////////////////////////////////////////////Métodos//////////////////////////////////////////////
+  //////////////////////////////////////////////Methods//////////////////////////////////////////////
 
-  //NgOnInit --> es un hook (gancho de ciclo de vida) en Angular que forma parte de los Lifecycle Hooks.
-  //Se ejecuta una vez que Angular ha inicializado todas las propiedades de un componente, es decir,
-  //cuando la vista y los datos del componente están listos.
+  //NgOnInit --> is a hook (lifecycle hook) in Angular that is part of the Lifecycle Hooks.
+  //It is executed once Angular has initialized all the properties of a component, ie,
+  //when the component's view and data are ready.
   ngOnInit() {
     this.getAllSellers();
   }
 
-  //GetAllSellers --> obtiene un array de vendedores(Seller[]) donde se guardan todos los datos 
-  // de vendedores de la API de clientes.
   getAllSellers() {
     this.sellerService.getAllSellers().subscribe({
       next: (data: Seller[]) => {
@@ -43,17 +39,15 @@ export class InfoSellersComponent implements OnInit {
       error: (error) => {
         console.error('Error al cargar vendedores');
         if (error.status === 0) {
-          // Este es un error típico de conexión (no hay conexión al servidor)
           this.messageService.showErrorMessage(
             'Could not connect to the server. Check your Internet connection or try again later.'
           );
         } else {
-          // Otros errores de la API
           this.messageService.showErrorMessage(
             'There was an error listing sellers. Please try again.'
           );
         }
-      },
+      }
     });
   }
 
@@ -67,7 +61,6 @@ export class InfoSellersComponent implements OnInit {
     this.exportService.exportTableToPDF('tblSellers', fileName);
   }
 
-  // Llama a closeMessage() del servicio
   closeMessage(): void {
     this.messageService.closeMessage();
   }

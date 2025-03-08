@@ -1,27 +1,48 @@
 <form (ngSubmit)="obSubmit()" #productForm="ngForm">
-    <div>
-        Name:
-        <input type="text" [(ngModel)]="newProduct.name" name="name" required>
+  <div>
+    Name:
+    <input type="text" [(ngModel)]="newProduct.name" name="name" required />
 
-        Packaging Date
-        <input type="date" [(ngModel)]="newProduct.packagingDate" name="packagingDate" required>
+    Packaging Date
+    <input
+      type="date"
+      [(ngModel)]="newProduct.packagingDate"
+      name="packagingDate"
+      required
+    />
 
-        Stock
-        <input type="number" [(ngModel)]="newProduct.stock" name="stock" required min="0">
+    Stock
+    <input
+      type="number"
+      [(ngModel)]="newProduct.stock"
+      name="stock"
+      required
+      min="0"
+    />
 
-        Price
-        <input type="number" [(ngModel)]="newProduct.price" name="price" required min="0">
-    </div>
+    Price
+    <input
+      type="number"
+      [(ngModel)]="newProduct.price"
+      name="price"
+      required
+      min="0"
+    />
+  </div>
 
-    <div>
-        <input type="submit" class="btn btn-primary mt-2" value="Create" [disabled]="!productForm.valid">
-    </div>
+  <div>
+    <input
+      type="submit"
+      class="btn btn-primary mt-2"
+      value="Create"
+      [disabled]="!productForm.valid"
+    />
+  </div>
 </form>
 
-<!-- Contenedor para el mensaje -->
 <div *ngIf="messageService.showMessage" class="message-container">
-<div class="message-box">
+  <div class="message-box">
     <p>{{ messageService.message }}</p>
     <button (click)="closeMessage()">Close</button>
-</div>
+  </div>
 </div>

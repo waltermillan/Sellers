@@ -11,18 +11,17 @@ import { MessageService } from '../services/message.service';
 })
 export class AddSellersComponent implements OnInit {
 
-  sellerForm!: FormGroup; // Definir el formulario reactivo
+  sellerForm!: FormGroup;
 
-  newSeller: Seller = {   // Nuevo cliente vacío
+  newSeller: Seller = { 
     id: 0,
     name: '',
     birthday: null
   };
 
   constructor(private sellerService:SellerService,
-              public messageService:MessageService) {
-    
-  }
+              public messageService:MessageService)
+  {}
 
   ngOnInit(){
 
@@ -35,23 +34,19 @@ export class AddSellersComponent implements OnInit {
   addSeller(): void{
     this.sellerService.addSeller(this.newSeller).subscribe({
       next: (data) => {
-        //console.log('Vendedor agregado:', this.newSeller);
         this.messageService.showSuccessMessage('Seller successfully added!')
       },
       error: (error) => {
-        console.error('Error al agregar el vendedor:', error);
+        console.error('Error adding seller:', error);
         if (error.status === 0) {
-          // Este es un error típico de conexión (no hay conexión al servidor)
           this.messageService.showErrorMessage('Could not connect to the server. Please check your Internet connection or try again later!');
         } else {
-          // Otros errores de la API
           this.messageService.showErrorMessage('There was an error adding the seller. Please try again.');
         }
       }
     })
   }
 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.messageService.showMessage = false;
   }

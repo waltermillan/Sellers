@@ -41,7 +41,6 @@ export class InfoSalesComponent implements OnInit {
     });
   }
 
-  // Método para cerrar el mensaje
    closeMessage(): void {
      this.messageService.showMessage = false;
    }

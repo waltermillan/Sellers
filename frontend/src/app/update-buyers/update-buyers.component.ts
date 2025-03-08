@@ -16,7 +16,7 @@ export class UpdateBuyersComponent {
   showMessage = false;
   message = '';
 
-  buyerForm!: FormGroup; // Formulario reactivo
+  buyerForm!: FormGroup;
   updBuyer: Buyer = {
     id: 0,
     name: '',
@@ -27,13 +27,11 @@ export class UpdateBuyersComponent {
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    // Inicializar el formulario con validaciones
     this.buyerForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       socialSecurityNumber: ['', [Validators.required]]
     });
 
-    // Cargar todos los vendedores
     this.getAllBuyers();
   }
 
@@ -45,24 +43,19 @@ export class UpdateBuyersComponent {
       error: (error) => {
         console.error('Error al cargar compradores', error);
         if (error.status === 0) {
-          // Este es un error típico de conexión (no hay conexión al servidor)
           this.showErrorMessage('Could not connect to the server. Check your Internet connection or try again later. successful!');
         } else {
-          // Otros errores de la API
           this.showErrorMessage('There was an error adding the buyer. Please try again.');
         }
       }
     });
   }
 
-  // Maneja el cambio de selección
   onBuyerChange(): void {
     if (this.selectedBuyerId != null) {
 
       const selectedBuyer = this.buyers.find(s => s.id == this.selectedBuyerId);
-  
-      //console.log('Vendedor encontrado:', selectedSeller);
-  
+    
       if (selectedBuyer) {
         this.updBuyer.id = selectedBuyer.id;
         this.updBuyer.name = selectedBuyer.name;
@@ -76,12 +69,12 @@ export class UpdateBuyersComponent {
     this.buyerService.update(this.updBuyer, this.updBuyer.id).subscribe({
       next: (data) => {
         this.showMessage = true;
-        this.message = 'Upgraded buyer';
+        this.message = 'Buyer updated';
       },
       error: (error) => {
-        console.error('Error al actualizar el comprador:', error);
+        console.error('Error updating buyer.', error);
         this.showMessage = true;
-        this.message = 'Error updating the buyer';
+        this.message = 'Error updating buyer.';
       }
     });
   }
@@ -90,25 +83,20 @@ export class UpdateBuyersComponent {
     this.updateBuyer();
   }
 
-  // Método para mostrar el mensaje después de un alta/modificación
   showSuccessMessage(action: string): void {
-    this.message = `¡${action} exitoso!`;
+    this.message = `¡${action} successfull!`;
     this.showMessage = true;
     
-    // Cerrar el mensaje después de 3 segundos
     setTimeout(() => this.closeMessage(), 3000);
   }
 
-  // Método para mostrar el mensaje después de un alta/modificación
   showErrorMessage(action: string): void {
     this.message = `¡${action} exitoso!`;
     this.showMessage = true;
     
-    // Cerrar el mensaje después de 3 segundos
     setTimeout(() => this.closeMessage(), 3000);
   }
 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.showMessage = false;
   }

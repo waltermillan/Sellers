@@ -36,7 +36,8 @@ public class ProductRepository : IProductRepository
     public async Task DeleteAsync(int id)
     {
         var seller = await _context.Products.FindAsync(id);
-        if (seller != null)
+
+        if (seller is not null)
         {
             _context.Products.Remove(seller);
             await _context.SaveChangesAsync();

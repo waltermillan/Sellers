@@ -8,7 +8,7 @@ import { GLOBAL_CONFIG  } from '../config/config.global';
 })
 export class BuyerService {
 
-  constructor(private http: HttpClient) { }//http://localhost:5184/api/buyers
+  constructor(private http: HttpClient) { }
 
   getAll(){
     const url = GLOBAL_CONFIG.apiBaseUrl + 'buyers';

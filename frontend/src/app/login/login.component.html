@@ -2,13 +2,29 @@
   <form (submit)="onLogin()">
     <div>
       <label for="username">Username:</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required style="width: 100%;">
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="username"
+        name="username"
+        required
+        style="width: 100%"
+      />
     </div>
     <div>
       <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required style="width: 100%;">
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        required
+        style="width: 100%"
+      />
     </div>
     <button type="submit">Login</button>
-    <div *ngIf="loginError" class="error" style="width: 100%;">{{ loginError }}</div>
+    <div *ngIf="loginError" class="error" style="width: 100%">
+      {{ loginError }}
+    </div>
   </form>
 </div>
