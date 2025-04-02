@@ -1,31 +1,31 @@
-# Proyecto Sellers
-Visualizacion de vendedores. ABM clásico.
-24/02/2025 => el sistema creció y se tranformó en un sistema de gestión de ventas de productos.
-07/03/2025 => Se agrega HashPassword, una clase que encripta la password del usaurio que se loguea al usuario + limpieza código/comentarios.
+# Sellers Project
+Visualization of sellers. Classic ABM.
+24/02/2025 => the system grew and became a product sales management system.
+07/03/2025 => HashPassword is added, a class that encrypts the password of the user logging in + cleaning code/comments.
 
-## Objetivo:
+## Objective:
 
-Practicar .NET (C#) / SQL y Angular (Typescript) / sin usar patrones de diseño / Arquitectura Onion.
-Conectar a Maria DB, por medio de EF, y usando docker y DBeaver
+Practice .NET (C#) / SQL and Angular (Typescript) / without using design patterns / Onion Architecture.
+Connecting to Maria DB, via EF, and using docker and DBeaver.
 
-## Características
+## Features.
 
 BACKEND:
-- Arquitectura Onion.
-- Diseño de patrones: No hay (inicialmente)
-  24/02/2025 => Se agregó el patron de diseño DTO.
+- Onion Architecture.
+- Design Patterns: None (initially)
+  02/24/2025 => DTO design pattern added.
 
 FRONTEND:
-- Desarrollado con Angular 18.0.2
-- Orientado a módulos.
+- Developed with Angular 18.0.2.
+- Module oriented.
 
-BBDD
-- Escrito en María DB con Docker.
-- Tablas (DDLs) y Datos (DMLs)
+DB
+- Written in Maria DB with Docker.
+- Tables (DDLs) and Data (DMLs).
 
-## Instalación
+## Installation
 
-1. Clona el repositorio:
+1. Clone the repository:
 
 git clone https://github.com/waltermillan/sellers.git
-
+YouTube: https://youtu.be/Qhcey6a2Xe0
