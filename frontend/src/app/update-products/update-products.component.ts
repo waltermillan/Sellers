@@ -70,7 +70,6 @@ export class UpdateProductsComponent implements OnInit {
   updateProduct(){
     this.productService.update(this.updProduct,this.updProduct.id).subscribe({
       next: (data) => {
-        console.log('Product successfully updated.');
         this.showMessage = true;
         this.message = 'Product successfully updated.';
       },

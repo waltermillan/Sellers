@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AddBuyersComponent } from './add-buyers.component';
 
 describe('AddBuyersComponent', () => {
@@ -8,7 +9,12 @@ describe('AddBuyersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddBuyersComponent]
+      imports: [FormsModule],
+      declarations: [AddBuyersComponent],
+      providers: [
+        AddBuyersComponent,
+        provideHttpClient(withInterceptorsFromDi(), withFetch()) 
+      ]
     })
     .compileComponents();
 

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { InfoUsersComponent } from './info-users.component';
 
 describe('InfoUsersComponent', () => {
@@ -8,7 +9,12 @@ describe('InfoUsersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InfoUsersComponent]
+      imports: [FormsModule],
+      declarations: [InfoUsersComponent],
+      providers: [
+        InfoUsersComponent,
+        provideHttpClient(withInterceptorsFromDi(), withFetch()) 
+      ]
     })
     .compileComponents();
 

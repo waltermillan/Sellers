@@ -30,7 +30,6 @@ export class InfoSalesComponent implements OnInit {
   getAllSalesDTO(){
     this.saleDTOService.getAll().subscribe({
       next: (data) => {
-        console.log(data);
         this.salesDTO = data;
       },
       error: (error) => {

@@ -9,9 +9,10 @@ public static class ApplicationServiceExtensions
         services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy", builder =>
-                builder.WithOrigins("http://localhost:4200")  // Allows only this origin in development
+                builder.WithOrigins("http://localhost:4200", "http://localhost:9876")  // Allows only this origins in development
                     .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .AllowAnyHeader());
+
         });
 
     public static void ConfigureServices(this IServiceCollection services)

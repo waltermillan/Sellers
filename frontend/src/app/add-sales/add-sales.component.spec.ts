@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import  { provideHttpClient, withInterceptorsFromDi, withFetch} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AddSalesComponent } from './add-sales.component';
+
 
 describe('AddSalesComponent', () => {
   let component: AddSalesComponent;
@@ -8,7 +11,12 @@ describe('AddSalesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddSalesComponent]
+      imports: [FormsModule], 
+      declarations: [AddSalesComponent],
+      providers: [
+        AddSalesComponent,
+        provideHttpClient(withInterceptorsFromDi(), withFetch())
+      ]
     })
     .compileComponents();
 

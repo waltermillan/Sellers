@@ -15,7 +15,6 @@ export class AuthService {
 
     const url = `${GLOBAL_CONFIG.apiBaseUrl}users/login`;
     const params = new HttpParams().set('usr', username).set('psw', password);
-    console.log(url);
     return this.http.post(url, null, { params });
   }
 

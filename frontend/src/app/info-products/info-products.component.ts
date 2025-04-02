@@ -29,7 +29,6 @@ export class InfoProductsComponent implements OnInit {
     this.productService.getAll().subscribe({
       next: (data:Product[]) => {
         this.products = data.filter(p=> p.stock > 0);
-        console.log('List Products');
       },
       error: (error) => {
         console.log('There was an error listing products. Please try again.');
@@ -49,10 +48,7 @@ export class InfoProductsComponent implements OnInit {
   this.exportService.exportTableToPDF('tblProducts', fileName)
   }
 
-  // Método para cerrar el mensaje
   closeMessage(): void {
     this.messageService.showMessage = false;
   }
-
-  
 }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/common/http';
 
 import { DeleteBuyersComponent } from './delete-buyers.component';
 
@@ -8,7 +9,11 @@ describe('DeleteBuyersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DeleteBuyersComponent]
+      declarations: [DeleteBuyersComponent],
+      providers: [
+        DeleteBuyersComponent,
+        provideHttpClient(withInterceptorsFromDi(), withFetch()) 
+      ]
     })
     .compileComponents();
 

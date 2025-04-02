@@ -53,7 +53,6 @@ export class AddSalesComponent implements OnInit {
     
   }
 
-  // Método para validar si todos los campos están seleccionados
   validateForm() {
     this.isFormValid = this.selectedIdSeller !== null && this.selectedIdProduct !== null && this.selectedIdBuyer !== null;
   }

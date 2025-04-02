@@ -16,7 +16,6 @@ export class SaleDTOService {
   getAll():Observable<SaleDTO[]>{
 
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/dto';
-    console.log(url);    
     return this.http.get<SaleDTO[]>(url);
   }
 }

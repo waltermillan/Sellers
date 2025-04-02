@@ -39,7 +39,6 @@ export class AddProductsComponent implements OnInit {
       next: (data) =>{
         this.messageService.showMessage = true;
         this.messageService.message = 'Product addedd successful';
-        console.log('Product addedd successful: ' + JSON.stringify( this.newProduct));
       },
       error: (error) => {
         console.error("error adding product.");

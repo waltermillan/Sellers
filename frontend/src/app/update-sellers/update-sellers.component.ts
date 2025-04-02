@@ -69,7 +69,7 @@ export class UpdateSellersComponent {
         const formattedDate = this.updSeller.birthday?.toISOString().split('T')[0];
         this.sellerForm.controls['birthday'].setValue(formattedDate);
       } else {
-        console.warn('Vendedor no encontrado');
+        console.warn('Seller not found.');
       }
     }
   }
@@ -90,7 +90,7 @@ export class UpdateSellersComponent {
         this.showSuccessMessage('Seller successfully upgraded.');
       },
       error: (error) => {
-        console.error('Error al actualizar el vendedor:', error);
+        console.error('Error updating seller.', error);
         this.showErrorMessage('Error updating seller.');
       }
     });

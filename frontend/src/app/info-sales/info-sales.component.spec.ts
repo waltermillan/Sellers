@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/common/http';
 
 import { InfoSalesComponent } from './info-sales.component';
 
@@ -8,7 +9,11 @@ describe('InfoSalesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InfoSalesComponent]
+      declarations: [InfoSalesComponent],
+      providers: [
+        InfoSalesComponent,
+        provideHttpClient(withInterceptorsFromDi(), withFetch()) 
+      ]
     })
     .compileComponents();
 
