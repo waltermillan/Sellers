@@ -15,8 +15,9 @@ builder.Services.ConfigureServices();
 builder.Services.ConfigureCors();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("ConnectionDB"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("ConnectionDB"))));  // We use MariaDB
+    options.UseOracle(
+        builder.Configuration.GetConnectionString("ConnectionDB")
+    ));
 
 // Configure logging filters for ASP.NET Core and Entity Framework Core
 builder.Logging.AddFilter("Microsoft", LogLevel.Warning);

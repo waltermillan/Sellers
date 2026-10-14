@@ -17,16 +17,29 @@ export class SaleService {
     return this.http.get<Sale[]>(url);
   }
 
-  add(sale:Sale){
+  
+add(sale: Sale) {
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'sales';
 
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'sales' ;
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
     });
 
-    console.log(JSON.stringify(sale));
-    return this.http.post(url, sale, { headers });
-  }
+    const [dia, mes, anio] = sale.date.split('/');
+
+    const saleToSend = {
+        ...sale,
+        date: new Date(
+            Number(anio),
+            Number(mes) - 1,
+            Number(dia)
+        ).toISOString()
+    };
+
+    console.log(JSON.stringify(saleToSend));
+
+    return this.http.post(url, saleToSend, { headers });
+}
 
   update(sale:Sale, id: number){
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/' + id;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -7,22 +8,24 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    [Table("Product")]
+    [Table("T_PRODUCT")]
     public class Product
     {
-        [Column("id")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("ID")]
         public int Id { get; set; }
 
-        [Column("name")]
+        [Column("NAME")]
         public string Name { get; set; }
 
-        [Column("packaging_date")]
+        [Column("PACKAGING_DATE")]
         public DateTime PackagingDate { get; set; }
 
-        [Column("stock")]
+        [Column("STOCK")]
         public int Stock { get; set; }
 
-        [Column("price")]
+        [Column("PRICE")]
         public decimal Price { get; set; }
     }
 }

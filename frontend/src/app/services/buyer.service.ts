@@ -21,7 +21,7 @@ export class BuyerService {
   }
 
   update(buyer:Buyer, id:number){
-    const url = GLOBAL_CONFIG.apiBaseUrl + 'buyers/ + id';
+    const url = GLOBAL_CONFIG.apiBaseUrl + 'buyers/' + id;
     return this.http.put(url, buyer);
   }
 

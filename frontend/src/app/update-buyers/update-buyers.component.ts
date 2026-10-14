@@ -65,7 +65,7 @@ export class UpdateBuyersComponent {
   } 
 
   updateBuyer(): void {
-
+    
     this.buyerService.update(this.updBuyer, this.updBuyer.id).subscribe({
       next: (data) => {
         this.showMessage = true;

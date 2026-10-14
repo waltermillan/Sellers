@@ -91,7 +91,7 @@ namespace Tests.UnitTests
         {
             //Arrange
             var mockSaleRepository = new Mock<ISaleRepository>();
-            string now = "2025-02-27T00:00:00";
+            DateTime now = DateTime.Parse("2025-02-27T00:00:00");
 
             //string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Tests", "UnitTests", "AddSales_AddsSales_WhenSalesIsValid.json");
             var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Sales\AddSales_AddsSales_WhenSalesIsValid.json");
@@ -117,7 +117,7 @@ namespace Tests.UnitTests
         {
             //Arrange
             var mockSaleRepository = new Mock<ISaleRepository>();
-            string now = "2025-02-27T00:00:00";
+            DateTime now = DateTime.Parse("2025-02-27T00:00:00");
             var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Sales\UpdateSale_UpdatesSale_WhenSaleIsValid.json");
 
             var saleJson = File.ReadAllText(jsonFilePath);

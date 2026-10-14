@@ -51,7 +51,7 @@ namespace Core.Services
                 IdProduct = product.Id,
                 ProductName = product.Name,
 
-                Date = DateTime.Parse(sale.Date)
+                Date = sale.Date
             };
 
             return saleDTO;
@@ -85,7 +85,7 @@ namespace Core.Services
                     BuyerName = buyer.Name,
                     IdProduct = product.Id,
                     ProductName = product.Name,
-                    Date = DateTime.Parse(sale.Date)
+                    Date = sale.Date
                 };
 
                 salesDTO.Add(saleDTO);

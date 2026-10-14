@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
-    [Table("Seller")]
+    [Table("T_SELLER")]
     public class Seller
     {
-        [Column("id")]
+        [Column("ID")]
         public int Id { get; set; }
-        [Column("name")]
+        [Column("NAME")]
         public string Name { get; set; }
-        [Column("birthday")]
+        [Column("BIRTHDAY")]
         public DateTime Birthday { get; set; }
     }
 }

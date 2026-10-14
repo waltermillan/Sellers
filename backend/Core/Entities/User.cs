@@ -1,18 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
 
-[Table("User")]
+[Table("T_USER")]
 public class User
 {
-    [Column("id")]
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Column("ID")]
     public int Id { get; set; }
-    [Column("username")]
+    [Required]
+    [Column("USERNAME")]
     public string UserName { get; set; }
-    [Column("password_hash")]
+    [Required]
+    [Column("PASSWORD_HASH")]
     public string PasswordHash { get; set; }
-    [Column("created_at")]
+    [Required]
+    [Column("CREATED_AT")]
     public DateTime CreatedAt { get; set; }
-    [Column("updated_at")]
+    [Required]
+    [Column("UPDATED_AT")]
     public DateTime UpdatedAt { get; set; }
 }
