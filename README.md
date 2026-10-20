@@ -6,6 +6,8 @@ Visualization of sellers. Classic CRUD system.
 
 ## 📅 Changelog
 
+- **20/10/2026**: Sales Management: Added Quantity and Amount fields to sales, with automatic amount calculation based on the selected product's price and quantity. Updated the sales listing and sorting by date, adjusted unit tests, and modified the Oracle database scripts to support the updated sale structure.
+  
 - **14/10/2026**: Database: migrated the database scripts from MariaDB to Oracle in the `migration/oracle` branch. Added DDL scripts for table creation, sequences, and triggers; DML scripts for initial data; DQL validation queries; and an updated Entity-Relationship Diagram (ERD) based on the Oracle schema.
 
 ---
