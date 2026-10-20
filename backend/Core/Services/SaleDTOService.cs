@@ -51,6 +51,9 @@ namespace Core.Services
                 IdProduct = product.Id,
                 ProductName = product.Name,
 
+                Quantity = sale.Quantity,
+                Amount = sale.Amount,
+
                 Date = sale.Date
             };
 
@@ -85,6 +88,8 @@ namespace Core.Services
                     BuyerName = buyer.Name,
                     IdProduct = product.Id,
                     ProductName = product.Name,
+                    Quantity = sale.Quantity,
+                    Amount = sale.Amount,
                     Date = sale.Date
                 };
 

@@ -22,4 +22,10 @@ public class Sale
 
     [Column("SALE_DATE")]
     public DateTime Date { get; set; }
+
+    [Column("AMOUNT")]
+    public Decimal Amount { get; set; }
+
+    [Column("QUANTITY")]
+    public int Quantity { get; set; }
 }

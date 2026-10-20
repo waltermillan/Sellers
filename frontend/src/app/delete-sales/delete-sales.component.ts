@@ -25,7 +25,9 @@ export class DeleteSalesComponent implements OnInit {
   getAllDTOSales(){
     this.saleDTOService.getAll().subscribe({
       next: (data) => {
-        this.salesDTO = data;
+      this.salesDTO = data.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
       },
       error: (error) => {
         console.error("Error loading sales");

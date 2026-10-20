@@ -3,5 +3,7 @@ export interface Sale {
     idBuyer:number | null;
     idProduct: number | null;
     idSeller:number | null;
+    amount: number | null;
+    quantity: number | null;
     date:string;
 }

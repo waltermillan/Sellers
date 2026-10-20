@@ -30,7 +30,10 @@ export class InfoSalesComponent implements OnInit {
   getAllSalesDTO(){
     this.saleDTOService.getAll().subscribe({
       next: (data) => {
-        this.salesDTO = data;
+      this.salesDTO = data.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+        console.log(this.salesDTO);
       },
       error: (error) => {
         console.error('Error al cargar los datos de las ventas. ', error);

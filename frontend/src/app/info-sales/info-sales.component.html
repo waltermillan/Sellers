@@ -5,25 +5,26 @@
     style="width: 100%; border-collapse: collapse"
   >
     <tr>
-      <th>ID Seller</th>
       <th>Seller Name</th>
-      <th>ID Buyer</th>
-      <th>Buyer Name</th>
-      <th>ID Product</th>
+      <th>Buyer Nath>
       <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Amount</th>
       <th>Date</th>
     </tr>
     <tbody>
       <tr *ngFor="let s of salesDTO">
-        <td style="text-align: left">{{ s.idSeller }}</td>
+        <!--<td style="text-align: left">{{ s.idSeller }}</td>-->
         <td style="text-align: left">{{ s.sellerName }}</td>
 
-        <td style="text-align: left">{{ s.idBuyer }}</td>
+        <!--<td style="text-align: left">{{ s.idBuyer }}</td>-->
         <td style="text-align: left">{{ s.buyerName }}</td>
 
-        <td style="text-align: left">{{ s.idProduct }}</td>
+        <!--<td style="text-align: left">{{ s.idProduct }}</td>-->
         <td style="text-align: left">{{ s.productName }}</td>
 
+        <td style="text-align: left">{{ s.quantity}}</td>
+        <td style="text-align: left">{{ s.amount}}</td>
         <td style="text-align: left">{{ s.date | date : "dd/MM/YYYY" }}</td>
       </tr>
     </tbody>

@@ -10,5 +10,8 @@ export interface SaleDTO {
     idProduct:number;
     productName:string;
 
+    amount:number;
+    quantity:number;
+
     date: Date;
 }

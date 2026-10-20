@@ -57,6 +57,38 @@
           </td>
           <td></td>
         </tr>
+<tr>
+  <td colspan="2"></td>
+  <td style="text-align: center">
+    <div style="width: 70%; margin: 0 auto">
+      <label for="quantity"><b>Quantity</b></label>
+      <input
+        id="quantity"
+        type="number"
+        name="quantity"
+        [(ngModel)]="newSale.quantity"
+        (ngModelChange)="updateAmount()"
+        min="1"
+        step="1"
+        required
+        class="form-control"
+      />
+
+      <label for="amount" class="mt-2"><b>Amount</b></label>
+      <input
+        id="amount"
+        type="number"
+        name="amount"
+        [ngModel]="newSale.amount"
+        min="1"
+        step="1"
+        readonly
+        class="form-control"
+      />
+    </div>
+  </td>
+  <td colspan="2"></td>
+</tr>
         <tr>
           <td colspan="2"></td>
           <td style="text-align: center">

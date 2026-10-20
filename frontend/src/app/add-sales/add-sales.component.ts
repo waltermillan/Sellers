@@ -23,6 +23,7 @@ export class AddSalesComponent implements OnInit {
   sellers:Seller[] = [];
   products:Product[] = [];
   buyers:Buyer[] = [];
+  selectedProductPrice: number = 0;
 
   selectedIdSeller: number | null = null;
   selectedIdProduct: number | null = null;
@@ -33,6 +34,8 @@ export class AddSalesComponent implements OnInit {
     idBuyer: 0,
     idProduct: 0,
     idSeller: 0,
+    amount: 1,
+    quantity: 1,
     date: ''
   }
 
@@ -62,6 +65,15 @@ export class AddSalesComponent implements OnInit {
   }
 
   addNewSale(){
+    if (
+      this.selectedIdProduct === null ||
+      this.newSale.quantity == null ||
+      this.newSale.quantity < 1
+    ) {
+      return;
+    }
+
+    this.updateAmount();
     this.newSale.idSeller = this.selectedIdSeller;
     this.newSale.idProduct = this.selectedIdProduct;
     this.newSale.idBuyer = this.selectedIdBuyer;
@@ -72,6 +84,8 @@ export class AddSalesComponent implements OnInit {
       idBuyer: this.selectedIdBuyer,
       idProduct: this.selectedIdProduct,
       idSeller: this.selectedIdSeller,
+      amount: this.newSale.amount,
+      quantity: this.newSale.quantity,
       date: this.commonService.getShortFormattedDate(new Date())
     };
 
@@ -132,13 +146,17 @@ export class AddSalesComponent implements OnInit {
           this.selectedIdSeller = item;
         }
         break;
-      case 2:
-        if (this.selectedIdProduct === item) {
-          this.selectedIdProduct = null;
-        } else {
-          this.selectedIdProduct = item;
-        }
-        break;
+        case 2:
+          if (this.selectedIdProduct === item) {
+            this.selectedIdProduct = null;
+            this.selectedProductPrice = 0;
+          } else {
+            this.selectedIdProduct = item;
+            this.selectedProductPrice =
+              this.products.find(p => p.id === item)?.price ?? 0;
+          }
+          this.updateAmount();
+          break;
       case 3:
         if (this.selectedIdBuyer === item) {
           this.selectedIdBuyer = null;
@@ -149,6 +167,11 @@ export class AddSalesComponent implements OnInit {
     };
 
     this.validateForm();
+  }
+
+  updateAmount(): void {
+    const quantity = this.newSale.quantity ?? 1;
+    this.newSale.amount = this.selectedProductPrice * quantity;
   }
 
   closeMessage(): void {

@@ -62,6 +62,8 @@ namespace Tests.UnitTests
             Assert.Equal(sale.IdBuyer, result.IdBuyer);
             Assert.Equal(sale.IdProduct, result.IdProduct);
             Assert.Equal(sale.IdSeller, result.IdSeller);
+            Assert.Equal(sale.Quantity, result.Quantity);
+            Assert.Equal(sale.Amount, result.Amount);
         }
 
         [Fact]
@@ -202,6 +204,4 @@ namespace Tests.UnitTests
         }
 
     }
-
-
 }

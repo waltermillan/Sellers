@@ -16,5 +16,7 @@ namespace Core.DTOs
         public int IdProduct { get; set; }
         public string ProductName { get; set; }
         public DateTime Date { get; set; }
+        public Decimal Amount { get; set; }
+        public int Quantity { get; set; }
     }
 }
