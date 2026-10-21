@@ -9,11 +9,13 @@ using System;
 public class SaleController : ControllerBase
 {
     private readonly ISaleRepository _saleRepository;
+    private readonly ISaleProcessedRepository _saleProcessedRepository;
     private readonly ILoggingService _loggingService;
 
-    public SaleController(ISaleRepository saleRepository, ILoggingService loggingService)
+    public SaleController(ISaleRepository saleRepository, ISaleProcessedRepository saleProcessedRepository, ILoggingService loggingService)
     {
         _saleRepository = saleRepository;
+        _saleProcessedRepository = saleProcessedRepository;
         _loggingService = loggingService;
     }
 
@@ -86,6 +88,55 @@ public class SaleController : ControllerBase
         }
     }
 
+
+
+    [HttpPost("bulk")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> CreateBulk()
+    {
+        try
+        {
+            var salesProcessed = await _saleProcessedRepository.GetAllAsync();
+            var sales = salesProcessed.Select(saleProcessed => new Sale
+            {
+                IdBuyer = saleProcessed.IdBuyer,
+                IdSeller = saleProcessed.IdSeller,
+                IdProduct = saleProcessed.IdProduct,
+                Date = saleProcessed.Date,
+                Amount = saleProcessed.Amount,
+                Quantity = saleProcessed.Quantity
+            }).ToList();
+
+            if (sales.Count == 0)
+                return Ok(new { Message = "No processed sales to copy.", Count = 0 });
+
+            foreach (var sale in sales)
+            {
+                await _saleRepository.AddAsync(sale);
+            }
+
+            _loggingService.LogInformation($"Bulk insert completed: {sales.Count} sales.");
+
+            return StatusCode(StatusCodes.Status201Created, new
+            {
+                Message = "Sales created successfully.",
+                Count = sales.Count
+            });
+        }
+        catch (Exception ex)
+        {
+            const string message = "There was an issue creating the sales.";
+            _loggingService.LogError(message, ex);
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new
+            {
+                Message = message,
+                Details = ex.Message
+            });
+        }
+    }
+
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -130,6 +181,40 @@ public class SaleController : ControllerBase
             message = "There was an issue retrieving the States. Please try again later.";
             _loggingService.LogError(message, ex);
             return StatusCode(500, new { Message = message, Details = ex.Message });
+        }
+    }
+
+    [HttpDelete("bulk")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> DeleteBulk()
+    {
+        var message = string.Empty;
+
+        try
+        {
+            var sales = (await _saleRepository.GetAllAsync()).ToList();
+
+            foreach (var sale in sales)
+            {
+                await _saleRepository.DeleteAsync(sale.Id);
+            }
+
+            _loggingService.LogInformation(
+                $"Bulk delete completed: {sales.Count} records.");
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            message = "There was an issue deleting the sales records.";
+            _loggingService.LogError(message, ex);
+
+            return StatusCode(500, new
+            {
+                Message = message,
+                Details = ex.Message
+            });
         }
     }
 }

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SaleDTO } from '../models/saleDTO.model';
 import { GLOBAL_CONFIG  } from '../config/config.global';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,12 @@ export class SaleDTOService {
 
   constructor(private http: HttpClient) { }
 
-  getAll():Observable<SaleDTO[]>{
 
+  getAll(): Observable<SaleDTO[]> {
     const url = GLOBAL_CONFIG.apiBaseUrl + 'sales/dto';
-    return this.http.get<SaleDTO[]>(url);
+
+    return this.http.get<SaleDTO[]>(url, { observe: 'response' }).pipe(
+      map(response => response.body ?? [])
+    );
   }
 }

@@ -23,6 +23,8 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IBuyerRepository, BuyerRepository>();
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ISaleProcessedRepository, SaleProcessedRepository>();
+        services.AddScoped<ISaleHistoricRepository, SaleHistoricRepository>();
 
         services.AddScoped<SaleDTOService>();
 

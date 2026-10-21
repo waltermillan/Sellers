@@ -24,6 +24,8 @@ import { DeleteSalesComponent } from './delete-sales/delete-sales.component';
 import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { InfoUsersComponent } from './info-users/info-users.component';
+import { InfoSalesProcessedComponent } from './info-sales-processed/info-sales-processed.component';
+import { InfoSalesHistoricComponent } from './info-sales-historic/info-sales-historic.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { InfoUsersComponent } from './info-users/info-users.component';
     DeleteSalesComponent,
     LoginComponent,
     PrincipalComponent,
-    InfoUsersComponent
+    InfoUsersComponent,
+    InfoSalesProcessedComponent,
+	InfoSalesHistoricComponent
   ],
   imports: [
     BrowserModule,

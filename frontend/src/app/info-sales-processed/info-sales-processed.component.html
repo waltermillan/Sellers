@@ -1,0 +1,62 @@
+<div style="max-height: 480px; overflow-y: auto">
+  <table
+    id="tblSales"
+    class="table table-bordered"
+    style="width: 100%; border-collapse: collapse"
+  >
+    <tr>
+      <th>Seller Name</th>
+      <th>Buyer Name>
+      <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+    <tbody>
+      <tr *ngFor="let s of salesProcessed">
+        <td style="text-align: left">{{ s.idSeller }}</td>
+        <td style="text-align: left">{{ s.idBuyer  }}</td>
+        <td style="text-align: left">{{ s.idProduct }}</td>
+        <td style="text-align: left">{{ s.quantity}}</td>
+        <td style="text-align: left">{{ s.amount}}</td>
+        <td style="text-align: left">{{ s.date | date : "dd/MM/YYYY" }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <table style="width: 100%">
+    <tr>
+      <td *ngIf="salesProcessed.length > 0; else msgNoData">
+        <img
+          src="assets/images/excel.svg"
+          style="max-width: 30px; max-height: 30px"
+          (click)="exportToExcel()"
+          class="cursor-img"
+          class="cursor-img"
+          title="Export to EXCEL"
+        />
+        <img
+          src="assets/images/pdf.svg"
+          style="max-width: 30px; max-height: 30px"
+          (click)="exportToPDF()"
+          class="cursor-img"
+          class="cursor-img"
+          title="Export to PDF"
+        />
+      </td>
+    </tr>
+  </table>
+</div>
+
+<ng-template #msgNoData>
+  <div style="text-align: center">No data available...</div>
+</ng-template>
+
+<div *ngIf="messageService.showMessage" class="message-container">
+  <div class="message-box">
+    <p>{{ messageService.message }}</p>
+    <button (click)="closeMessage()">Close</button>
+  </div>
+</div>

@@ -5,6 +5,11 @@ import { MessageService } from '../services/message.service';
 import { ExportService } from '../services/export.service';
 import { CommonService } from '../services/common.service';
 import { GLOBAL_CONFIG } from '../config/config.global';
+import { SaleService } from '../services/sale.service';
+import { SaleProcessedService } from '../services/saleProcessed.service';
+import { SaleHistoricService } from '../services/saleHistoric.service';
+import { SaleHistoric } from '../models/saleHistoric.model';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-info-sales',
@@ -18,7 +23,11 @@ export class InfoSalesComponent implements OnInit {
   constructor(private saleDTOService: SaleDTOService,
               public messageService: MessageService,
               private exportService: ExportService,
-              private commonService: CommonService
+              private commonService: CommonService,
+              private saleService: SaleService,
+              private saleProcessedService: SaleProcessedService,
+              private saleHistoricService: SaleHistoricService,
+              
   ) {
 
   }
@@ -56,5 +65,36 @@ export class InfoSalesComponent implements OnInit {
     const fileName = GLOBAL_CONFIG.infoFileName + this.commonService.getCompleteFormattedDate() + '.pdf';
     this.exportService.exportTableToPDF('tblSales', fileName)
    }
+   
+  processSales(): void {
+    this.saleProcessedService.addBulk().pipe(
+      switchMap(() => {
+        const saleHistoric: SaleHistoric = {
+          id: 0,
+          numberOfSales: this.salesDTO.length,
+          status: 'SUCCESS',
+          processedDate: new Date().toISOString()
+        };
 
+        return this.saleHistoricService.add(saleHistoric);
+      }),
+      switchMap(() => this.saleService.deleteBulk())
+    ).subscribe({
+      next: () => {
+        this.messageService.showMessage = true;
+        this.messageService.message =
+          'Sales processed, historic registered and original records deleted successfully.';
+
+        this.getAllSalesDTO();
+      },
+      error: (error) => {
+        console.error('Error processing sales.', error);
+
+        this.messageService.showMessage = true;
+        this.messageService.message =
+          error.error?.message ??
+          'There was an error processing sales. Please check the data and try again.';
+      }
+    });
+  }
 }

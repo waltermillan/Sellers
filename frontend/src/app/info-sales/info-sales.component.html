@@ -1,4 +1,4 @@
-<div style="max-height: 500px; overflow-y: auto">
+<div style="max-height: 480px; overflow-y: auto">
   <table
     id="tblSales"
     class="table table-bordered"
@@ -34,14 +34,6 @@
 <div>
   <table style="width: 100%">
     <tr>
-      <td *ngIf="salesDTO.length > 0; else msgNoData"></td>
-    </tr>
-  </table>
-</div>
-
-<div>
-  <table style="width: 100%">
-    <tr>
       <td *ngIf="salesDTO.length > 0; else msgNoData">
         <img
           src="assets/images/excel.svg"
@@ -62,6 +54,12 @@
       </td>
     </tr>
   </table>
+</div>
+
+<div style="margin-top: 15px; text-align: center;">
+  <button type="button" class="btn btn-primary" (click)="processSales()" [disabled]="salesDTO.length === 0">
+    Procesar ventas
+  </button>
 </div>
 
 <ng-template #msgNoData>

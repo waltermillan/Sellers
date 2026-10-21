@@ -8,6 +8,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Seller> Sellers { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Buyer> Buyers { get; set; }
+    public DbSet<SaleHistoric> SalesHistoric { get; set; }
+    public DbSet<SaleProcessed> SalesProcessed { get; set; }
     public DbSet<Sale> Sales { get; set; }
     public DbSet<User> Users { get; set; }
 

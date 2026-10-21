@@ -18,8 +18,12 @@ import { DeleteProductsComponent } from './delete-products/delete-products.compo
 
 import { InfoSalesComponent } from './info-sales/info-sales.component';
 import { AddSalesComponent } from './add-sales/add-sales.component';
+
 import { UpdateSalesComponent } from './update-sales/update-sales.component';
 import { DeleteSalesComponent } from './delete-sales/delete-sales.component';
+
+import { InfoSalesProcessedComponent } from './info-sales-processed/info-sales-processed.component';
+import { InfoSalesHistoricComponent } from './info-sales-historic/info-sales-historic.component';
 
 import { InfoUsersComponent } from './info-users/info-users.component';
 
@@ -46,7 +50,9 @@ const routes: Routes = [
   { path: 'add-sales', component: AddSalesComponent },
   { path: 'update-sales', component: UpdateSalesComponent },
   { path: 'delete-sales', component: DeleteSalesComponent },
-  { path: 'info-users', component: InfoUsersComponent }
+  { path: 'info-users', component: InfoUsersComponent },
+  { path: 'info-sales-processed', component: InfoSalesProcessedComponent },
+  { path: 'info-sales-historic', component: InfoSalesHistoricComponent },
 ];
 
 @NgModule({
